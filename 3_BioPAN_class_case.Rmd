@@ -6,7 +6,7 @@ editor_options:
 
 ## Active Case
 
-Let us consider the pathway of PC to PS to PE.
+Let us consider the pathway of `PC` to `PS` to `PE`.
 
 <p align="center">
 ![](figures/giz061_ActivePCtoPStoPE_pathway.PNG)
@@ -54,9 +54,9 @@ active_data <- tibble::tibble(
 active_data
 ```
 
-### PC to PS
+### `PC` to `PS`
 
-Compute the weight for product `PS` over reactant `PC` for each sample
+**Compute the weight for product `PS` over reactant `PC` for each sample.**
 
 ```{r label=weight_vector_PS_over_PC, message=FALSE, warning=FALSE}
 weights <- (active_data$`PS`/active_data$`PC`)
@@ -67,7 +67,7 @@ active_data %>%
   dplyr::select(-c(.data$`PE`))
 ```
 
-Compute a one-sided Welch t-test between the samples of interest and the control samples
+**Compute a one-sided Welch t-test between the samples of interest and the control samples.**
 
 ```{r label=t.test_PS_over_PC, message=FALSE, warning=FALSE, results='asis'}
 
@@ -80,18 +80,19 @@ control_samples <- active_data %>%
   dplyr::pull(.data$`PS over PC`)
 
 t1 <- t.test(aa_samples, control_samples, alternative = "greater")
+cat(paste("p value is", format(t1$p.value, scientific = TRUE, digits = 3)))
 report::report(t1)
 ```
 
-Convert the p value into a Z Score
+**Convert the p value into a Z Score.**
 ```{r label=Zscore_PS_over_PC, message=FALSE, warning=FALSE, results='asis'}
 z_score1 <- qnorm(1 - t1$p.value)
 cat(paste("Z-score for  is", z_score1))
 ```
 
-### PS to PE
+### `PS` to `PE`
 
-Compute the weight for product `PE` over reactant `PS` for each sample
+**Compute the weight for product `PE` over reactant `PS` for each sample.**
 
 ```{r label=weight_vector_PE_over_PS, message=FALSE, warning=FALSE}
 weights <- (active_data$`PE`/active_data$`PS`)
@@ -102,7 +103,7 @@ active_data %>%
   dplyr::select(-c(.data$`PC`,.data$`PS over PC`))
 ```
 
-Compute a one-sided Welch t-test between the samples of interest and the control samples
+**Compute a one-sided Welch t-test between the samples of interest and the control samples.**
 
 ```{r label=t.test_PE_over_PS, message=FALSE, warning=FALSE, results='asis'}
 
@@ -115,16 +116,17 @@ control_samples <- active_data %>%
   dplyr::pull(.data$`PE over PS`)
 
 t2 <- t.test(aa_samples, control_samples, alternative = "greater")
+cat(paste("p value is", format(t2$p.value, scientific = TRUE, digits = 3)))
 report::report(t2)
 ```
 
-Convert the p value into a Z Score
+**Convert the p value into a Z Score.**
 ```{r label=Zscore_PE_over_PS, message=FALSE, warning=FALSE, results='asis'}
 z_score2 <- qnorm(1 - t2$p.value)
 cat(paste("Z-score is", z_score2))
 ```
 
-### Computing Z-Score for pathway PC to PS to PE
+**Compute Z-Score for pathway `PC` to `PS` to `PE`.**
 
 ```{r label=Zscore_active_pathway_class, message=FALSE, warning=FALSE, results='asis'}
 z_a <- (1/sqrt(2)) * (z_score1 + z_score2)

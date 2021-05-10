@@ -6,7 +6,7 @@ editor_options:
 
 ## Active Case
 
-Let us consider the pathway of PS(42:8) to PE(42:8) to PC(42:8).
+Let us consider the pathway of `PS(42:8)` to `PE(42:8)` to `PC(42:8)`.
 
 <p align="center">
 ![](figures/giz061_Active42_8_pathway.PNG)
@@ -42,9 +42,9 @@ active_data <- tibble::tibble(
 active_data
 ```
 
-### PS(42:8) to PE(42:8)
+### `PS(42:8)` to `PE(42:8)`
 
-Compute the weight for product `PE(42:8)` over reactant `PS(42:8)` for each sample
+**Compute the weight for product `PE(42:8)` over reactant `PS(42:8)` for each sample.**
 
 ```{r label=weight_vector_PE42_8_over_PS42_8, message=FALSE, warning=FALSE}
 weights <- (active_data$`PE(42:8)`/active_data$`PS(42:8)`)
@@ -55,7 +55,7 @@ active_data %>%
   dplyr::select(-c(.data$`PC(42:8)`))
 ```
 
-Compute a one-sided Welch t-test between the samples of interest and the control samples
+**Compute a one-sided Welch t-test between the samples of interest and the control samples.**
 
 ```{r label=t.test_PE42_8_over_PS42_8, message=FALSE, warning=FALSE, results='asis'}
 
@@ -68,10 +68,12 @@ control_samples <- active_data %>%
   dplyr::pull(.data$`PE(42:8) over PS(42:8)`)
 
 t1 <- t.test(aa_samples, control_samples, alternative = "greater")
+
+cat(paste("p value is", format(t1$p.value, scientific = TRUE, digits = 3)))
 report::report(t1)
 ```
 
-Convert the p value into a Z Score. This is also the pathway score.
+**Convert the p value into a Z Score. This is also the pathway score.**
 ```{r label=Zscore_PE42_8_over_PS42_8, message=FALSE, warning=FALSE, results='asis'}
 z_score1 <- qnorm(1 - t1$p.value)
 cat(paste("Z-score for  is", z_score1))
@@ -79,7 +81,7 @@ cat(paste("Z-score for  is", z_score1))
 
 ### PE(42:8) to PC(42:8)
 
-Compute the weight for product `PC(42:8)` over reactant `PE(42:8)` for each sample
+**Compute the weight for product `PC(42:8)` over reactant `PE(42:8)` for each sample.**
 
 ```{r label=weight_vector_PC42_8_over_PE42_8, message=FALSE, warning=FALSE}
 weights <- (active_data$`PC(42:8)`/active_data$`PE(42:8)`)
@@ -90,7 +92,7 @@ active_data %>%
   dplyr::select(-c(.data$`PS(42:8)`,.data$`PE(42:8) over PS(42:8)`))
 ```
 
-Compute a one-sided Welch t-test between the samples of interest and the control samples
+**Compute a one-sided Welch t-test between the samples of interest and the control samples.**
 
 ```{r label=t.test_PC42_8_over_PE42_8, message=FALSE, warning=FALSE, results='asis'}
 
@@ -103,16 +105,17 @@ control_samples <- active_data %>%
   dplyr::pull(.data$`PC(42:8) over PE(42:8)`)
 
 t2 <- t.test(aa_samples, control_samples, alternative = "greater")
+cat(paste("p value is", format(t2$p.value, scientific = TRUE, digits = 3)))
 report::report(t2)
 ```
 
-Convert the p value into a Z Score. This is also the pathway score.
+**Convert the p value into a Z Score. This is also the pathway score.**
 ```{r label=Zscore_PC42_8_over_PE42_8, message=FALSE, warning=FALSE, results='asis'}
 z_score2 <- qnorm(1 - t2$p.value)
 cat(paste("Z-score is", z_score2))
 ```
 
-### Computing Z-Score for pathway PS(42:8) to PE(42:8) to PC(42:8)
+**Compute Z-Score for pathway `PS(42:8)` to `PE(42:8)` to `PC(42:8)`.**
 
 ```{r label=Zscore_active_pathway, message=FALSE, warning=FALSE, results='asis'}
 z_a <- (1/sqrt(2)) * (z_score1 + z_score2)
@@ -121,7 +124,7 @@ cat(paste("Z-score is", z_a))
 
 ## Suppressed Case
 
-Let us consider the pathway of PS(32:0) to PE(32:0) to PC(32:0).
+Let us consider the pathway of `PS(32:0)` to `PE(32:0)` to `PC(32:0)`.
 
 <p align="center">
 ![](figures/giz061_Suppressed32_0_pathway.PNG)
@@ -161,7 +164,7 @@ suppressed_data <- tibble::tibble(
 suppressed_data
 ```
 
-BioPAN will give a warning on the duplicated transition PC(32:0) and sum them up.
+BioPAN will give a warning on the duplicated transition `PC(32:0)` and sum them up.
 
 <p align="center">
 ![](figures/giz061_32_0_warning.PNG)
@@ -180,9 +183,9 @@ suppressed_data <- tibble::tibble(
 suppressed_data
 ```
 
-### PS(32:0) to PE(32:0)
+### `PS(32:0)` to `PE(32:0)`
 
-Compute the weight for product `PE(32:0)` over reactant `PS(32:0)` for each sample
+**Compute the weight for product `PE(32:0)` over reactant `PS(32:0)` for each sample.**
 
 ```{r label=weight_vector_PE32_0_over_PS32_0, message=FALSE, warning=FALSE}
 weights <- (suppressed_data$`PE(32:0)`/suppressed_data$`PS(32:0)`)
@@ -193,7 +196,7 @@ suppressed_data %>%
   dplyr::select(-c(.data$`PC(32:0)`))
 ```
 
-Compute a one-sided Welch t-test between the samples of interest and the control samples
+**Compute a one-sided Welch t-test between the samples of interest and the control samples.**
 
 ```{r label=t.test_PE32_0_over_PS32_0, message=FALSE, warning=FALSE, results='asis'}
 
@@ -206,10 +209,11 @@ control_samples <- suppressed_data %>%
   dplyr::pull(.data$`PE(32:0) over PS(32:0)`)
 
 t1 <- t.test(aa_samples, control_samples, alternative = "less")
+cat(paste("p value is", format(t1$p.value, scientific = TRUE, digits = 3)))
 report::report(t1)
 ```
 
-Convert the p value into a Z Score. This is also the pathway score.
+**Convert the p value into a Z Score. This is also the pathway score.**
 ```{r label=Zscore_PE32_0_over_PS32_0, message=FALSE, warning=FALSE, results='asis'}
 z_score1 <- qnorm(1 - t1$p.value)
 cat(paste("Z-score for  is", z_score1))
@@ -217,7 +221,7 @@ cat(paste("Z-score for  is", z_score1))
 
 ### PE(32:0) to PC(32:0)
 
-Compute the weight for product `PC(32:0)` over reactant `PE(32:0)` for each sample
+**Compute the weight for product `PC(32:0)` over reactant `PE(32:0)` for each sample.**
 
 ```{r label=weight_vector_PC32_0_over_PE32_0, message=FALSE, warning=FALSE}
 weights <- (suppressed_data$`PC(32:0)`/suppressed_data$`PE(32:0)`)
@@ -228,7 +232,7 @@ suppressed_data %>%
   dplyr::select(-c(.data$`PS(32:0)`,.data$`PE(32:0) over PS(32:0)`))
 ```
 
-Compute a one-sided Welch t-test between the samples of interest and the control samples
+**Compute a one-sided Welch t-test between the samples of interest and the control samples.**
 
 ```{r label=t.test_PC32_0_over_PE32_0, message=FALSE, warning=FALSE, results='asis'}
 
@@ -241,16 +245,17 @@ control_samples <- suppressed_data %>%
   dplyr::pull(.data$`PC(32:0) over PE(32:0)`)
 
 t2 <- t.test(aa_samples, control_samples, alternative = "less")
+cat(paste("p value is", format(t2$p.value, scientific = TRUE, digits = 3)))
 report::report(t2)
 ```
 
-Convert the p value into a Z Score. This is also the pathway score.
+**Convert the p value into a Z Score. This is also the pathway score.**
 ```{r label=Zscore_PC32_0_over_PE32_0, message=FALSE, warning=FALSE, results='asis'}
 z_score2 <- qnorm(1 - t2$p.value)
 cat(paste("Z-score is", z_score2))
 ```
 
-### Computing Z-Score for pathway PS(32:0) to PE(32:0) to PC(32:0)
+**Compute Z-Score for pathway `PS(32:0)` to `PE(32:0)` to `PC(32:0)`.**
 
 ```{r label=Zscore_suppressed_pathway, message=FALSE, warning=FALSE, results='asis'}
 z_a <- (1/sqrt(2)) * (z_score1 + z_score2)

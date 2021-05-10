@@ -449,7 +449,7 @@ div.tocify {
 <h1 class="tabset">BioPAN on Lipid Species</h1>
 <div id="active-case" class="section level2">
 <h2>Active Case</h2>
-<p>Let us consider the pathway of PS(42:8) to PE(42:8) to PC(42:8).</p>
+<p>Let us consider the pathway of <code>PS(42:8)</code> to <code>PE(42:8)</code> to <code>PC(42:8)</code>.</p>
 <p align="center">
 <img src="D:/BioPAN_Tutorial/figures/giz061_Active42_8_pathway.PNG" />
 </p>
@@ -546,8 +546,8 @@ div.tocify {
 </table>
 </div>
 <div id="ps428-to-pe428" class="section level3">
-<h3>PS(42:8) to PE(42:8)</h3>
-<p>Compute the weight for product <code>PE(42:8)</code> over reactant <code>PS(42:8)</code> for each sample</p>
+<h3><code>PS(42:8)</code> to <code>PE(42:8)</code></h3>
+<p><strong>Compute the weight for product <code>PE(42:8)</code> over reactant <code>PS(42:8)</code> for each sample.</strong></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> (active_data<span class="sc">$</span><span class="st">`</span><span class="at">PE(42:8)</span><span class="st">`</span> <span class="sc">/</span> active_data<span class="sc">$</span><span class="st">`</span><span class="at">PS(42:8)</span><span class="st">`</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>active_data <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">PE(42:8) over PS(42:8)</span><span class="st">`</span> <span class="ot">=</span> weights)</span>
@@ -611,7 +611,7 @@ div.tocify {
 </tbody>
 </table>
 </div>
-<p>Compute a one-sided Welch t-test between the samples of interest and the control samples</p>
+<p><strong>Compute a one-sided Welch t-test between the samples of interest and the control samples.</strong></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>aa_samples <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PE(42:8) over PS(42:8)</span><span class="st">`</span>)</span>
@@ -621,23 +621,26 @@ div.tocify {
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PE(42:8) over PS(42:8)</span><span class="st">`</span>)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(aa_samples, control_samples, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report</span>(t1)</span></code></pre></div>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;p value is&quot;</span>, <span class="fu">format</span>(t1<span class="sc">$</span>p.value, <span class="at">scientific =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">3</span>)))</span></code></pre></div>
+<p>p value is 6.75e-04</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report</span>(t1)</span></code></pre></div>
 <p>Effect sizes were labelled following Cohen’s (1988) recommendations.</p>
 <p>The Welch Two Sample t-test testing the difference between aa_samples and control_samples (mean of x = 3.63, mean of y = 0.13) suggests that the effect is positive, statistically significant, and large (difference = 3.51, 95% CI [3.12, Inf], t(2.03) = 26.01, p &lt; .001; Cohen’s d = 21.24, 95% CI [3.37, 39.33])</p>
-<p>Convert the p value into a Z Score. This is also the pathway score.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>z_score1 <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> t1<span class="sc">$</span>p.value)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score for  is&quot;</span>, z_score1))</span></code></pre></div>
+<p><strong>Convert the p value into a Z Score. This is also the pathway score.</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>z_score1 <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> t1<span class="sc">$</span>p.value)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score for  is&quot;</span>, z_score1))</span></code></pre></div>
 <p>Z-score for is 3.20504629448603</p>
 </div>
 <div id="pe428-to-pc428" class="section level3">
 <h3>PE(42:8) to PC(42:8)</h3>
-<p>Compute the weight for product <code>PC(42:8)</code> over reactant <code>PE(42:8)</code> for each sample</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> (active_data<span class="sc">$</span><span class="st">`</span><span class="at">PC(42:8)</span><span class="st">`</span> <span class="sc">/</span> active_data<span class="sc">$</span><span class="st">`</span><span class="at">PE(42:8)</span><span class="st">`</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>active_data <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">PC(42:8) over PE(42:8)</span><span class="st">`</span> <span class="ot">=</span> weights)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>active_data <span class="sc">%&gt;%</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PS(42:8)</span><span class="st">`</span>, .data<span class="sc">$</span><span class="st">`</span><span class="at">PE(42:8) over PS(42:8)</span><span class="st">`</span>))</span></code></pre></div>
+<p><strong>Compute the weight for product <code>PC(42:8)</code> over reactant <code>PE(42:8)</code> for each sample.</strong></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> (active_data<span class="sc">$</span><span class="st">`</span><span class="at">PC(42:8)</span><span class="st">`</span> <span class="sc">/</span> active_data<span class="sc">$</span><span class="st">`</span><span class="at">PE(42:8)</span><span class="st">`</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>active_data <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">PC(42:8) over PE(42:8)</span><span class="st">`</span> <span class="ot">=</span> weights)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>active_data <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PS(42:8)</span><span class="st">`</span>, .data<span class="sc">$</span><span class="st">`</span><span class="at">PE(42:8) over PS(42:8)</span><span class="st">`</span>))</span></code></pre></div>
 <div class="kable-table">
 <table>
 <thead>
@@ -695,78 +698,78 @@ div.tocify {
 </tbody>
 </table>
 </div>
-<p>Compute a one-sided Welch t-test between the samples of interest and the control samples</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>aa_samples <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PC(42:8) over PE(42:8)</span><span class="st">`</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>control_samples <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;CON&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PC(42:8) over PE(42:8)</span><span class="st">`</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(aa_samples, control_samples, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report</span>(t2)</span></code></pre></div>
+<p><strong>Compute a one-sided Welch t-test between the samples of interest and the control samples.</strong></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>aa_samples <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PC(42:8) over PE(42:8)</span><span class="st">`</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>control_samples <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;CON&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PC(42:8) over PE(42:8)</span><span class="st">`</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(aa_samples, control_samples, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;p value is&quot;</span>, <span class="fu">format</span>(t2<span class="sc">$</span>p.value, <span class="at">scientific =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">3</span>)))</span></code></pre></div>
+<p>p value is 8.11e-04</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report</span>(t2)</span></code></pre></div>
 <p>Effect sizes were labelled following Cohen’s (1988) recommendations.</p>
 <p>The Welch Two Sample t-test testing the difference between aa_samples and control_samples (mean of x = 7.60, mean of y = 3.00) suggests that the effect is positive, statistically significant, and large (difference = 4.59, 95% CI [3.91, Inf], t(2.30) = 17.85, p &lt; .001; Cohen’s d = 14.58, 95% CI [2.70, 27.26])</p>
-<p>Convert the p value into a Z Score. This is also the pathway score.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>z_score2 <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> t2<span class="sc">$</span>p.value)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score is&quot;</span>, z_score2))</span></code></pre></div>
+<p><strong>Convert the p value into a Z Score. This is also the pathway score.</strong></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>z_score2 <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> t2<span class="sc">$</span>p.value)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score is&quot;</span>, z_score2))</span></code></pre></div>
 <p>Z-score is 3.15181491630827</p>
-</div>
-<div id="computing-z-score-for-pathway-ps428-to-pe428-to-pc428" class="section level3">
-<h3>Computing Z-Score for pathway PS(42:8) to PE(42:8) to PC(42:8)</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>z_a <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">2</span>)) <span class="sc">*</span> (z_score1 <span class="sc">+</span> z_score2)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score is&quot;</span>, z_a))</span></code></pre></div>
+<p><strong>Compute Z-Score for pathway <code>PS(42:8)</code> to <code>PE(42:8)</code> to <code>PC(42:8)</code>.</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>z_a <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">2</span>)) <span class="sc">*</span> (z_score1 <span class="sc">+</span> z_score2)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score is&quot;</span>, z_a))</span></code></pre></div>
 <p>Z-score is 4.49497966921438</p>
 </div>
 </div>
 <div id="suppressed-case" class="section level2">
 <h2>Suppressed Case</h2>
-<p>Let us consider the pathway of PS(32:0) to PE(32:0) to PC(32:0).</p>
+<p>Let us consider the pathway of <code>PS(32:0)</code> to <code>PE(32:0)</code> to <code>PC(32:0)</code>.</p>
 <p align="center">
 <img src="D:/BioPAN_Tutorial/figures/giz061_Suppressed32_0_pathway.PNG" />
 </p>
 <p>The dataset are as follows:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;24h CON&quot;</span>, <span class="st">&quot;24h CON&quot;</span>, <span class="st">&quot;24h CON&quot;</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;24h AA&quot;</span>, <span class="st">&quot;24h AA&quot;</span>, <span class="st">&quot;24h AA&quot;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>group <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;CON&quot;</span>, <span class="st">&quot;CON&quot;</span>, <span class="st">&quot;CON&quot;</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;AA&quot;</span>, <span class="st">&quot;AA&quot;</span>, <span class="st">&quot;AA&quot;</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>PS32_0 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.11392858</span>, <span class="fl">0.080762026</span>, <span class="fl">0.128541348</span>,</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.656895224</span>, <span class="fl">0.800790573</span>, <span class="fl">0.592724899</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>PE32_0 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.046063214</span>, <span class="fl">0.043759251</span>, <span class="fl">0.047335343</span>,</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.175927791</span>, <span class="fl">0.183855506</span>, <span class="fl">0.194325215</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>PC32_0_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.074150848</span>, <span class="fl">0.726798053</span>, <span class="fl">0.412228743</span>,</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.94494173</span>, <span class="fl">1.520645133</span>, <span class="fl">1.337827826</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>PC32_0_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.928888882</span>, <span class="fl">0.964353269</span>, <span class="fl">0.789633482</span>,</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.666428947</span>, <span class="fl">1.375398801</span>, <span class="fl">1.616097007</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>suppressed_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample =</span> samples,</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">Group =</span> group,</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PS(32:0)</span><span class="st">`</span> <span class="ot">=</span> PS32_0,</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PE(32:0)</span><span class="st">`</span> <span class="ot">=</span> PE32_0,</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PC(32:0) 1</span><span class="st">`</span> <span class="ot">=</span> PC32_0_1,</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PC(32:0) 2</span><span class="st">`</span> <span class="ot">=</span> PC32_0_2</span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>suppressed_data</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;24h CON&quot;</span>, <span class="st">&quot;24h CON&quot;</span>, <span class="st">&quot;24h CON&quot;</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;24h AA&quot;</span>, <span class="st">&quot;24h AA&quot;</span>, <span class="st">&quot;24h AA&quot;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>group <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;CON&quot;</span>, <span class="st">&quot;CON&quot;</span>, <span class="st">&quot;CON&quot;</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;AA&quot;</span>, <span class="st">&quot;AA&quot;</span>, <span class="st">&quot;AA&quot;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>PS32_0 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.11392858</span>, <span class="fl">0.080762026</span>, <span class="fl">0.128541348</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.656895224</span>, <span class="fl">0.800790573</span>, <span class="fl">0.592724899</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>PE32_0 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.046063214</span>, <span class="fl">0.043759251</span>, <span class="fl">0.047335343</span>,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.175927791</span>, <span class="fl">0.183855506</span>, <span class="fl">0.194325215</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>PC32_0_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.074150848</span>, <span class="fl">0.726798053</span>, <span class="fl">0.412228743</span>,</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.94494173</span>, <span class="fl">1.520645133</span>, <span class="fl">1.337827826</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>PC32_0_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.928888882</span>, <span class="fl">0.964353269</span>, <span class="fl">0.789633482</span>,</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.666428947</span>, <span class="fl">1.375398801</span>, <span class="fl">1.616097007</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>suppressed_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample =</span> samples,</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">Group =</span> group,</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PS(32:0)</span><span class="st">`</span> <span class="ot">=</span> PS32_0,</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PE(32:0)</span><span class="st">`</span> <span class="ot">=</span> PE32_0,</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PC(32:0) 1</span><span class="st">`</span> <span class="ot">=</span> PC32_0_1,</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PC(32:0) 2</span><span class="st">`</span> <span class="ot">=</span> PC32_0_2</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>suppressed_data</span></code></pre></div>
 <div class="kable-table">
 <table>
 <thead>
@@ -831,19 +834,19 @@ div.tocify {
 </tbody>
 </table>
 </div>
-<p>BioPAN will give a warning on the duplicated transition PC(32:0) and sum them up.</p>
+<p>BioPAN will give a warning on the duplicated transition <code>PC(32:0)</code> and sum them up.</p>
 <p align="center">
 <img src="D:/BioPAN_Tutorial/figures/giz061_32_0_warning.PNG" />
 </p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>suppressed_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample =</span> samples,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Group =</span> group,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PS(32:0)</span><span class="st">`</span> <span class="ot">=</span> PS32_0,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PE(32:0)</span><span class="st">`</span> <span class="ot">=</span> PE32_0,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PC(32:0)</span><span class="st">`</span> <span class="ot">=</span> PC32_0_1 <span class="sc">+</span> PC32_0_2</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>suppressed_data</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>suppressed_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample =</span> samples,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Group =</span> group,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PS(32:0)</span><span class="st">`</span> <span class="ot">=</span> PS32_0,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PE(32:0)</span><span class="st">`</span> <span class="ot">=</span> PE32_0,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">PC(32:0)</span><span class="st">`</span> <span class="ot">=</span> PC32_0_1 <span class="sc">+</span> PC32_0_2</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>suppressed_data</span></code></pre></div>
 <div class="kable-table">
 <table>
 <thead>
@@ -902,14 +905,14 @@ div.tocify {
 </table>
 </div>
 <div id="ps320-to-pe320" class="section level3">
-<h3>PS(32:0) to PE(32:0)</h3>
-<p>Compute the weight for product <code>PE(32:0)</code> over reactant <code>PS(32:0)</code> for each sample</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> (suppressed_data<span class="sc">$</span><span class="st">`</span><span class="at">PE(32:0)</span><span class="st">`</span> <span class="sc">/</span> suppressed_data<span class="sc">$</span><span class="st">`</span><span class="at">PS(32:0)</span><span class="st">`</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>suppressed_data <span class="ot">&lt;-</span> suppressed_data <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">PE(32:0) over PS(32:0)</span><span class="st">`</span> <span class="ot">=</span> weights)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>suppressed_data <span class="sc">%&gt;%</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PC(32:0)</span><span class="st">`</span>))</span></code></pre></div>
+<h3><code>PS(32:0)</code> to <code>PE(32:0)</code></h3>
+<p><strong>Compute the weight for product <code>PE(32:0)</code> over reactant <code>PS(32:0)</code> for each sample.</strong></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> (suppressed_data<span class="sc">$</span><span class="st">`</span><span class="at">PE(32:0)</span><span class="st">`</span> <span class="sc">/</span> suppressed_data<span class="sc">$</span><span class="st">`</span><span class="at">PS(32:0)</span><span class="st">`</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>suppressed_data <span class="ot">&lt;-</span> suppressed_data <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">PE(32:0) over PS(32:0)</span><span class="st">`</span> <span class="ot">=</span> weights)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>suppressed_data <span class="sc">%&gt;%</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PC(32:0)</span><span class="st">`</span>))</span></code></pre></div>
 <div class="kable-table">
 <table>
 <thead>
@@ -967,33 +970,35 @@ div.tocify {
 </tbody>
 </table>
 </div>
-<p>Compute a one-sided Welch t-test between the samples of interest and the control samples</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>aa_samples <span class="ot">&lt;-</span> suppressed_data <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PE(32:0) over PS(32:0)</span><span class="st">`</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>control_samples <span class="ot">&lt;-</span> suppressed_data <span class="sc">%&gt;%</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;CON&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PE(32:0) over PS(32:0)</span><span class="st">`</span>)</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(aa_samples, control_samples, <span class="at">alternative =</span> <span class="st">&quot;less&quot;</span>)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report</span>(t1)</span></code></pre></div>
+<p><strong>Compute a one-sided Welch t-test between the samples of interest and the control samples.</strong></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>aa_samples <span class="ot">&lt;-</span> suppressed_data <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PE(32:0) over PS(32:0)</span><span class="st">`</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>control_samples <span class="ot">&lt;-</span> suppressed_data <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;CON&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PE(32:0) over PS(32:0)</span><span class="st">`</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(aa_samples, control_samples, <span class="at">alternative =</span> <span class="st">&quot;less&quot;</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;p value is&quot;</span>, <span class="fu">format</span>(t1<span class="sc">$</span>p.value, <span class="at">scientific =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">3</span>)))</span></code></pre></div>
+<p>p value is 3.55e-02</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report</span>(t1)</span></code></pre></div>
 <p>Effect sizes were labelled following Cohen’s (1988) recommendations.</p>
 <p>The Welch Two Sample t-test testing the difference between aa_samples and control_samples (mean of x = 0.28, mean of y = 0.44) suggests that the effect is negative, statistically significant, and large (difference = -0.16, 95% CI [-Inf, -0.02], t(3.08) = -2.71, p &lt; .05; Cohen’s d = -2.21, 95% CI [-4.46, 0.16])</p>
-<p>Convert the p value into a Z Score. This is also the pathway score.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>z_score1 <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> t1<span class="sc">$</span>p.value)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score for  is&quot;</span>, z_score1))</span></code></pre></div>
+<p><strong>Convert the p value into a Z Score. This is also the pathway score.</strong></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>z_score1 <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> t1<span class="sc">$</span>p.value)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score for  is&quot;</span>, z_score1))</span></code></pre></div>
 <p>Z-score for is 1.80525581223643</p>
 </div>
 <div id="pe320-to-pc320" class="section level3">
 <h3>PE(32:0) to PC(32:0)</h3>
-<p>Compute the weight for product <code>PC(32:0)</code> over reactant <code>PE(32:0)</code> for each sample</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> (suppressed_data<span class="sc">$</span><span class="st">`</span><span class="at">PC(32:0)</span><span class="st">`</span> <span class="sc">/</span> suppressed_data<span class="sc">$</span><span class="st">`</span><span class="at">PE(32:0)</span><span class="st">`</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>suppressed_data <span class="ot">&lt;-</span> suppressed_data <span class="sc">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">PC(32:0) over PE(32:0)</span><span class="st">`</span> <span class="ot">=</span> weights)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>suppressed_data <span class="sc">%&gt;%</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PS(32:0)</span><span class="st">`</span>, .data<span class="sc">$</span><span class="st">`</span><span class="at">PE(32:0) over PS(32:0)</span><span class="st">`</span>))</span></code></pre></div>
+<p><strong>Compute the weight for product <code>PC(32:0)</code> over reactant <code>PE(32:0)</code> for each sample.</strong></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> (suppressed_data<span class="sc">$</span><span class="st">`</span><span class="at">PC(32:0)</span><span class="st">`</span> <span class="sc">/</span> suppressed_data<span class="sc">$</span><span class="st">`</span><span class="at">PE(32:0)</span><span class="st">`</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>suppressed_data <span class="ot">&lt;-</span> suppressed_data <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">PC(32:0) over PE(32:0)</span><span class="st">`</span> <span class="ot">=</span> weights)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>suppressed_data <span class="sc">%&gt;%</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PS(32:0)</span><span class="st">`</span>, .data<span class="sc">$</span><span class="st">`</span><span class="at">PE(32:0) over PS(32:0)</span><span class="st">`</span>))</span></code></pre></div>
 <div class="kable-table">
 <table>
 <thead>
@@ -1051,28 +1056,28 @@ div.tocify {
 </tbody>
 </table>
 </div>
-<p>Compute a one-sided Welch t-test between the samples of interest and the control samples</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>aa_samples <span class="ot">&lt;-</span> suppressed_data <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PC(32:0) over PE(32:0)</span><span class="st">`</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>control_samples <span class="ot">&lt;-</span> suppressed_data <span class="sc">%&gt;%</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;CON&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PC(32:0) over PE(32:0)</span><span class="st">`</span>)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(aa_samples, control_samples, <span class="at">alternative =</span> <span class="st">&quot;less&quot;</span>)</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report</span>(t2)</span></code></pre></div>
+<p><strong>Compute a one-sided Welch t-test between the samples of interest and the control samples.</strong></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>aa_samples <span class="ot">&lt;-</span> suppressed_data <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PC(32:0) over PE(32:0)</span><span class="st">`</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>control_samples <span class="ot">&lt;-</span> suppressed_data <span class="sc">%&gt;%</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;CON&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PC(32:0) over PE(32:0)</span><span class="st">`</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(aa_samples, control_samples, <span class="at">alternative =</span> <span class="st">&quot;less&quot;</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;p value is&quot;</span>, <span class="fu">format</span>(t2<span class="sc">$</span>p.value, <span class="at">scientific =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">3</span>)))</span></code></pre></div>
+<p>p value is 3.18e-02</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report</span>(t2)</span></code></pre></div>
 <p>Effect sizes were labelled following Cohen’s (1988) recommendations.</p>
 <p>The Welch Two Sample t-test testing the difference between aa_samples and control_samples (mean of x = 17.16, mean of y = 35.84) suggests that the effect is negative, statistically significant, and large (difference = -18.68, 95% CI [-Inf, -3.83], t(2.39) = -3.30, p &lt; .05; Cohen’s d = -2.69, 95% CI [-5.41, 0.12])</p>
-<p>Convert the p value into a Z Score. This is also the pathway score.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>z_score2 <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> t2<span class="sc">$</span>p.value)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score is&quot;</span>, z_score2))</span></code></pre></div>
+<p><strong>Convert the p value into a Z Score. This is also the pathway score.</strong></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>z_score2 <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> t2<span class="sc">$</span>p.value)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score is&quot;</span>, z_score2))</span></code></pre></div>
 <p>Z-score is 1.85554094197453</p>
-</div>
-<div id="computing-z-score-for-pathway-ps320-to-pe320-to-pc320" class="section level3">
-<h3>Computing Z-Score for pathway PS(32:0) to PE(32:0) to PC(32:0)</h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>z_a <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">2</span>)) <span class="sc">*</span> (z_score1 <span class="sc">+</span> z_score2)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score is&quot;</span>, z_a))</span></code></pre></div>
+<p><strong>Compute Z-Score for pathway <code>PS(32:0)</code> to <code>PE(32:0)</code> to <code>PC(32:0)</code>.</strong></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>z_a <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">2</span>)) <span class="sc">*</span> (z_score1 <span class="sc">+</span> z_score2)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score is&quot;</span>, z_a))</span></code></pre></div>
 <p>Z-score is 2.58857420944827</p>
 </div>
 </div>
@@ -1081,65 +1086,65 @@ div.tocify {
 <h1 class="tabset">BioPAN on Lipid Class</h1>
 <div id="active-case-1" class="section level2">
 <h2>Active Case</h2>
-<p>Let us consider the pathway of PC to PS to PE.</p>
+<p>Let us consider the pathway of <code>PC</code> to <code>PS</code> to <code>PE</code>.</p>
 <p align="center">
 <img src="D:/BioPAN_Tutorial/figures/giz061_ActivePCtoPStoPE_pathway.PNG" />
 </p>
 <p>The dataset are as follows:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;24h CON&quot;</span>, <span class="st">&quot;24h CON&quot;</span>, <span class="st">&quot;24h CON&quot;</span>,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;24h AA&quot;</span>, <span class="st">&quot;24h AA&quot;</span>, <span class="st">&quot;24h AA&quot;</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>group <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;CON&quot;</span>, <span class="st">&quot;CON&quot;</span>, <span class="st">&quot;CON&quot;</span>,</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;AA&quot;</span>, <span class="st">&quot;AA&quot;</span>, <span class="st">&quot;AA&quot;</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>PS42_8 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.039096671</span>, <span class="fl">0.048629063</span>, <span class="fl">0.033723608</span>,</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.047177176</span>, <span class="fl">0.041427748</span>, <span class="fl">0.043042335</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>PE42_8 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.005358486</span>, <span class="fl">0.00509418</span>, <span class="fl">0.00489321</span>,</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.160215808</span>, <span class="fl">0.151076058</span>, <span class="fl">0.166159881</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>PC42_8 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.01543998</span>, <span class="fl">0.015312104</span>, <span class="fl">0.015252706</span>,</span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.286319709</span>, <span class="fl">1.083053662</span>, <span class="fl">1.261169034</span></span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>PS32_0 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.11392858</span>, <span class="fl">0.080762026</span>, <span class="fl">0.128541348</span>,</span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.656895224</span>, <span class="fl">0.800790573</span>, <span class="fl">0.592724899</span></span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>PE32_0 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.046063214</span>, <span class="fl">0.043759251</span>, <span class="fl">0.047335343</span>,</span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.175927791</span>, <span class="fl">0.183855506</span>, <span class="fl">0.194325215</span></span>
-<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>PC32_0_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.074150848</span>, <span class="fl">0.726798053</span>, <span class="fl">0.412228743</span>,</span>
-<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.94494173</span>, <span class="fl">1.520645133</span>, <span class="fl">1.337827826</span></span>
-<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>PC32_0_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.928888882</span>, <span class="fl">0.964353269</span>, <span class="fl">0.789633482</span>,</span>
-<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.666428947</span>, <span class="fl">1.375398801</span>, <span class="fl">1.616097007</span></span>
-<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>active_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample =</span> samples,</span>
-<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">Group =</span> group,</span>
-<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">PS =</span> PS42_8 <span class="sc">+</span> PS32_0,</span>
-<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">PE =</span> PE42_8 <span class="sc">+</span> PE32_0,</span>
-<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>  <span class="at">PC =</span> PC42_8 <span class="sc">+</span> PC32_0_1 <span class="sc">+</span> PC32_0_2</span>
-<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a>active_data</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;24h CON&quot;</span>, <span class="st">&quot;24h CON&quot;</span>, <span class="st">&quot;24h CON&quot;</span>,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;24h AA&quot;</span>, <span class="st">&quot;24h AA&quot;</span>, <span class="st">&quot;24h AA&quot;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>group <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;CON&quot;</span>, <span class="st">&quot;CON&quot;</span>, <span class="st">&quot;CON&quot;</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;AA&quot;</span>, <span class="st">&quot;AA&quot;</span>, <span class="st">&quot;AA&quot;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>PS42_8 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.039096671</span>, <span class="fl">0.048629063</span>, <span class="fl">0.033723608</span>,</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.047177176</span>, <span class="fl">0.041427748</span>, <span class="fl">0.043042335</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>PE42_8 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.005358486</span>, <span class="fl">0.00509418</span>, <span class="fl">0.00489321</span>,</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.160215808</span>, <span class="fl">0.151076058</span>, <span class="fl">0.166159881</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>PC42_8 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.01543998</span>, <span class="fl">0.015312104</span>, <span class="fl">0.015252706</span>,</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.286319709</span>, <span class="fl">1.083053662</span>, <span class="fl">1.261169034</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>PS32_0 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.11392858</span>, <span class="fl">0.080762026</span>, <span class="fl">0.128541348</span>,</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.656895224</span>, <span class="fl">0.800790573</span>, <span class="fl">0.592724899</span></span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>PE32_0 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.046063214</span>, <span class="fl">0.043759251</span>, <span class="fl">0.047335343</span>,</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.175927791</span>, <span class="fl">0.183855506</span>, <span class="fl">0.194325215</span></span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>PC32_0_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.074150848</span>, <span class="fl">0.726798053</span>, <span class="fl">0.412228743</span>,</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.94494173</span>, <span class="fl">1.520645133</span>, <span class="fl">1.337827826</span></span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>PC32_0_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.928888882</span>, <span class="fl">0.964353269</span>, <span class="fl">0.789633482</span>,</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.666428947</span>, <span class="fl">1.375398801</span>, <span class="fl">1.616097007</span></span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>active_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sample =</span> samples,</span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">Group =</span> group,</span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>  <span class="at">PS =</span> PS42_8 <span class="sc">+</span> PS32_0,</span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">PE =</span> PE42_8 <span class="sc">+</span> PE32_0,</span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>  <span class="at">PC =</span> PC42_8 <span class="sc">+</span> PC32_0_1 <span class="sc">+</span> PC32_0_2</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a>active_data</span></code></pre></div>
 <div class="kable-table">
 <table>
 <thead>
@@ -1198,14 +1203,14 @@ div.tocify {
 </table>
 </div>
 <div id="pc-to-ps" class="section level3">
-<h3>PC to PS</h3>
-<p>Compute the weight for product <code>PS</code> over reactant <code>PC</code> for each sample</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> (active_data<span class="sc">$</span><span class="st">`</span><span class="at">PS</span><span class="st">`</span> <span class="sc">/</span> active_data<span class="sc">$</span><span class="st">`</span><span class="at">PC</span><span class="st">`</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>active_data <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">PS over PC</span><span class="st">`</span> <span class="ot">=</span> weights)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>active_data <span class="sc">%&gt;%</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PE</span><span class="st">`</span>))</span></code></pre></div>
+<h3><code>PC</code> to <code>PS</code></h3>
+<p><strong>Compute the weight for product <code>PS</code> over reactant <code>PC</code> for each sample.</strong></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> (active_data<span class="sc">$</span><span class="st">`</span><span class="at">PS</span><span class="st">`</span> <span class="sc">/</span> active_data<span class="sc">$</span><span class="st">`</span><span class="at">PC</span><span class="st">`</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>active_data <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">PS over PC</span><span class="st">`</span> <span class="ot">=</span> weights)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>active_data <span class="sc">%&gt;%</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PE</span><span class="st">`</span>))</span></code></pre></div>
 <div class="kable-table">
 <table>
 <thead>
@@ -1263,33 +1268,35 @@ div.tocify {
 </tbody>
 </table>
 </div>
-<p>Compute a one-sided Welch t-test between the samples of interest and the control samples</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>aa_samples <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PS over PC</span><span class="st">`</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>control_samples <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;CON&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PS over PC</span><span class="st">`</span>)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(aa_samples, control_samples, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report</span>(t1)</span></code></pre></div>
+<p><strong>Compute a one-sided Welch t-test between the samples of interest and the control samples.</strong></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>aa_samples <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PS over PC</span><span class="st">`</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>control_samples <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;CON&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PS over PC</span><span class="st">`</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(aa_samples, control_samples, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;p value is&quot;</span>, <span class="fu">format</span>(t1<span class="sc">$</span>p.value, <span class="at">scientific =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">3</span>)))</span></code></pre></div>
+<p>p value is 3.18e-02</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report</span>(t1)</span></code></pre></div>
 <p>Effect sizes were labelled following Cohen’s (1988) recommendations.</p>
 <p>The Welch Two Sample t-test testing the difference between aa_samples and control_samples (mean of x = 0.17, mean of y = 0.09) suggests that the effect is positive, statistically significant, and large (difference = 0.07, 95% CI [0.01, Inf], t(3.95) = 2.56, p &lt; .05; Cohen’s d = 2.09, 95% CI [-0.11, 4.15])</p>
-<p>Convert the p value into a Z Score</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>z_score1 <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> t1<span class="sc">$</span>p.value)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score for  is&quot;</span>, z_score1))</span></code></pre></div>
+<p><strong>Convert the p value into a Z Score.</strong></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>z_score1 <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> t1<span class="sc">$</span>p.value)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score for  is&quot;</span>, z_score1))</span></code></pre></div>
 <p>Z-score for is 1.85471354639888</p>
 </div>
 <div id="ps-to-pe" class="section level3">
-<h3>PS to PE</h3>
-<p>Compute the weight for product <code>PE</code> over reactant <code>PS</code> for each sample</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> (active_data<span class="sc">$</span><span class="st">`</span><span class="at">PE</span><span class="st">`</span> <span class="sc">/</span> active_data<span class="sc">$</span><span class="st">`</span><span class="at">PS</span><span class="st">`</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>active_data <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">PE over PS</span><span class="st">`</span> <span class="ot">=</span> weights)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>active_data <span class="sc">%&gt;%</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PC</span><span class="st">`</span>, .data<span class="sc">$</span><span class="st">`</span><span class="at">PS over PC</span><span class="st">`</span>))</span></code></pre></div>
+<h3><code>PS</code> to <code>PE</code></h3>
+<p><strong>Compute the weight for product <code>PE</code> over reactant <code>PS</code> for each sample.</strong></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> (active_data<span class="sc">$</span><span class="st">`</span><span class="at">PE</span><span class="st">`</span> <span class="sc">/</span> active_data<span class="sc">$</span><span class="st">`</span><span class="at">PS</span><span class="st">`</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>active_data <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="st">`</span><span class="at">PE over PS</span><span class="st">`</span> <span class="ot">=</span> weights)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>active_data <span class="sc">%&gt;%</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PC</span><span class="st">`</span>, .data<span class="sc">$</span><span class="st">`</span><span class="at">PS over PC</span><span class="st">`</span>))</span></code></pre></div>
 <div class="kable-table">
 <table>
 <thead>
@@ -1347,28 +1354,28 @@ div.tocify {
 </tbody>
 </table>
 </div>
-<p>Compute a one-sided Welch t-test between the samples of interest and the control samples</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>aa_samples <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PE over PS</span><span class="st">`</span>)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>control_samples <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;CON&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PE over PS</span><span class="st">`</span>)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(aa_samples, control_samples, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report</span>(t2)</span></code></pre></div>
+<p><strong>Compute a one-sided Welch t-test between the samples of interest and the control samples.</strong></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>aa_samples <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;AA&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PE over PS</span><span class="st">`</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>control_samples <span class="ot">&lt;-</span> active_data <span class="sc">%&gt;%</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(.data<span class="sc">$</span>Group <span class="sc">==</span> <span class="st">&quot;CON&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(.data<span class="sc">$</span><span class="st">`</span><span class="at">PE over PS</span><span class="st">`</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>t2 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(aa_samples, control_samples, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;p value is&quot;</span>, <span class="fu">format</span>(t2<span class="sc">$</span>p.value, <span class="at">scientific =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">3</span>)))</span></code></pre></div>
+<p>p value is 4.84e-02</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">report</span>(t2)</span></code></pre></div>
 <p>Effect sizes were labelled following Cohen’s (1988) recommendations.</p>
 <p>The Welch Two Sample t-test testing the difference between aa_samples and control_samples (mean of x = 0.48, mean of y = 0.35) suggests that the effect is positive, statistically significant, and large (difference = 0.14, 95% CI [2.24e-03, Inf], t(2.46) = 2.62, p &lt; .05; Cohen’s d = 2.14, 95% CI [-0.31, 4.46])</p>
-<p>Convert the p value into a Z Score</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>z_score2 <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> t2<span class="sc">$</span>p.value)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score is&quot;</span>, z_score2))</span></code></pre></div>
+<p><strong>Convert the p value into a Z Score.</strong></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>z_score2 <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> t2<span class="sc">$</span>p.value)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score is&quot;</span>, z_score2))</span></code></pre></div>
 <p>Z-score is 1.66046410056085</p>
-</div>
-<div id="computing-z-score-for-pathway-pc-to-ps-to-pe" class="section level3">
-<h3>Computing Z-Score for pathway PC to PS to PE</h3>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>z_a <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">2</span>)) <span class="sc">*</span> (z_score1 <span class="sc">+</span> z_score2)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score is&quot;</span>, z_a))</span></code></pre></div>
+<p><strong>Compute Z-Score for pathway <code>PC</code> to <code>PS</code> to <code>PE</code>.</strong></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>z_a <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">2</span>)) <span class="sc">*</span> (z_score1 <span class="sc">+</span> z_score2)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">&quot;Z-score is&quot;</span>, z_a))</span></code></pre></div>
 <p>Z-score is 2.4856059512406</p>
 </div>
 </div>
@@ -1379,7 +1386,7 @@ div.tocify {
 </div>
 <div id="package-references" class="section level1">
 <h1>Package References</h1>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">cite_packages</span>(<span class="fu">sessionInfo</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">cite_packages</span>(<span class="fu">sessionInfo</span>())</span></code></pre></div>
 <ul>
 <li>Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2021). dplyr: A Grammar of Data Manipulation. R package version 1.0.6. <a href="https://CRAN.R-project.org/package=dplyr" class="uri">https://CRAN.R-project.org/package=dplyr</a></li>
 <li>JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin Ushey and Aron Atkins and Hadley Wickham and Joe Cheng and Winston Chang and Richard Iannone (2021). rmarkdown: Dynamic Documents for R. R package version 2.7. URL <a href="https://rmarkdown.rstudio.com" class="uri">https://rmarkdown.rstudio.com</a>.</li>
@@ -1403,7 +1410,7 @@ div.tocify {
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogJyoqQmlvUEFOIFR1dG9yaWFsKionDQpzdWJ0aXRsZTogVGhpcyBkb2N1bWVudCB3YXMgcHJlcGFyZWQgb24gYHIgZm9ybWF0KFN5cy5EYXRlKCkpYC4NCm91dHB1dDoNCiAgaHRtbF9kb2N1bWVudDoNCiAgICB0aGVtZTogY2VydWxlYW4NCiAgICBoaWdobGlnaHQ6IHB5Z21lbnRzDQogICAgdG9jOiB5ZXMNCiAgICB0b2NfZGVwdGg6IDINCiAgICB0b2NfZmxvYXQ6DQogICAgICBjb2xsYXBzZWQ6IHRydWUNCiAgICAgIHNtb290aF9zY3JvbGw6IHRydWUNCiAgICBudW1iZXJfc2VjdGlvbnM6IG5vDQogICAgZGZfcHJpbnQ6IGthYmxlDQogICAgY29kZV9mb2xkaW5nOiBoaWRlDQogICAgY29kZV9kb3dubG9hZDogeWVzDQogICAgc2VsZl9jb250YWluZWQ6IGZhbHNlDQogICAgbGliX2RpcjogImRvY3Mvcm1hcmtkb3duX2xpYnMiDQogIHJtYXJrZG93bjo6aHRtbF92aWduZXR0ZToNCiAgICB0b2M6IHllcw0KICAgIHRvY19kZXB0aDogMg0KZWRpdG9yX29wdGlvbnM6DQogIGNodW5rX291dHB1dF90eXBlOiBjb25zb2xlDQpiaWJsaW9ncmFwaHk6IHV0aWxzL2JpYmxpb2dyYXBoeS5iaWINCmNzbDogdXRpbHMvZjEwMDByZXNlYXJjaC5jc2wNCi0tLQ0KDQoNCjwhLS0gDQohISEhIElNUE9SVEFOVDogcnVuIGBzb3VyY2UoInV0aWxzL3JlbmRlci5SIilgIHRvIHB1Ymxpc2ggaW5zdGVhZCBvZiBjbGlja2luZyBvbiAnS25pdCcNCiMgU2VlIGh0dHBzOi8veWlodWkub3JnL2tuaXRyL29wdGlvbnMvDQotLT4NCg0KYGBge3Igc2V0dXAsIHdhcm5pbmc9RkFMU0UsIG1lc3NhZ2U9VFJVRSwgaW5jbHVkZT1GQUxTRX0NCiMgU2V0IHVwIHRoZSBlbnZpcm9ubWVudA0KDQojIE9wdGlvbnMgcmVsYXRpdmUgdG8gZmlndXJlIHNpemUNCiMgMS42MTggaXMgdGhlIGdvbGRlbiByYXRpbw0KZmlnaGVpZ2h0IDwtIDQNCmZpZ3dpZHRoIDwtIDQgKiAxLjYxOCANCg0KIyBHZW5lcmFsIG9wdGlvbnMNCm9wdGlvbnMoa25pdHIua2FibGUuTkEgPSAiIiwNCiAgICAgICAgZGlnaXRzID0gMywNCiAgICAgICAgdGlkeXZlcnNlLnF1aWV0ID0gVFJVRSkNCg0KIyBDaHVuayBvcHRpb25zIChzZWUgaHR0cHM6Ly95aWh1aS5vcmcva25pdHIvb3B0aW9ucy8jY2h1bmtfb3B0aW9ucykNCmtuaXRyOjpvcHRzX2NodW5rJHNldCgNCiAgY29tbWVudCA9ICI+IiwgICMgVGhlIHByZWZpeCB0byBiZSBhZGRlZCBiZWZvcmUgZWFjaCBsaW5lIG9mIHRoZSB0ZXh0IG91dHB1dC4NCiAgZHBpID0gNjAwLA0KICBmaWcucGF0aCA9ICJmaWd1cmVzLyIsDQogIGZpZy5oZWlnaHQgPSBmaWdoZWlnaHQsDQogIGZpZy53aWR0aCA9IGZpZ3dpZHRoLA0KICAjIFNlZSBodHRwczovL2NvbW11bml0eS5yc3R1ZGlvLmNvbS90L2NlbnRlcmluZy1pbWFnZXMtaW4tYmxvZ2Rvd24tcG9zdC8yMDk2Mg0KICAjIHRvIGxlYXJuIGhvdyB0byBjZW50ZXIgaW1hZ2VzDQogICMgU2VlIGh0dHBzOi8vYm9va2Rvd24ub3JnL3lpaHVpL3JtYXJrZG93bi1jb29rYm9vay9vcHRzLXRpZHkuaHRtbA0KICB0aWR5PSdzdHlsZXInLA0KICB0aWR5Lm9wdHM9bGlzdChzdHJpY3Q9VFJVRSkNCikNCg0KZmFzdCA8LSBGQUxTRSAgIyBNYWtlIHRoaXMgZmFsc2UgdG8gc2tpcCB0aGUgY2h1bmtzDQpgYGANCg0KIyBBZ2VuZGENCg0KVGhpcyBkb2N1bWVudCBoZWxwcyB0byBleHBsYWluIGhvdyB0aGUgbnVtYmVyIGRpc3BsYXllZCBpbiB0aGUgQmlvUEFOIHNvZnR3YXJlIGFyZSBjYWxjdWxhdGVkIHVzaW5nIGEgc21hbGwgZGF0YXNldCBhcyBhbiBleGFtcGxlLg0KDQojIEFib3V0IEJpb1BBTg0KDQpbQmlvUEFOXShodHRwczovL2YxMDAwcmVzZWFyY2guY29tL2FydGljbGVzLzEwLTQpIFtAQklPUEFOXSBpcyBhIHRvb2wgZm91bmQgaW4gW0xJUElEIE1BUFNdKGh0dHBzOi8vbGlwaWRtYXBzLm9yZy9iaW9wYW4pIGRlc2lnbmVkIHRvIGF1dG9tYXRlIGJpb3N5bnRoZXRpYyBwYXRod2F5IGFuYWx5c2lzIG9mIGxpcGlkcy4NCg0KPHAgYWxpZ249ImNlbnRlciI+DQohW10oZmlndXJlcy9naXowNjFfQWN0aXZlUEN0b1BTdG9QRV9wYXRod2F5LlBORykNCjwvcD4NCg0KQmVsb3cgaXMgYSBbWW91VHViZSB2aWRlb10oaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1FZlRDX0x1UjNhaykgb24gaG93IHRvIHVzZSBCaW9QQU4uDQoNCjxwIGFsaWduPSJjZW50ZXIiPg0KPGlmcmFtZSB3aWR0aD0iNTYwIiBoZWlnaHQ9IjMxNSIgc3JjPSJodHRwczovL3d3dy55b3V0dWJlLmNvbS9lbWJlZC9FZlRDX0x1UjNhayIgZnJhbWVib3JkZXI9IjAiIGFsbG93ZnVsbHNjcmVlbj48L2lmcmFtZT4NCjwvcD4NCg0KVGhlIFtkb2N1bWVudGF0aW9uXShodHRwczovL3d3dy5saXBpZG1hcHMub3JnL2Jpb3Bhbi9kb2Mvc3RlcDNfYnVpbGQuaHRtbCkgb2YgQmlvUEFOIHByb3ZpZGVzIGEgdGVjaG5pY2FsIGV4cGxhbmF0aW9uIG9mIGhvdyB0aGUgcGF0aHdheSBzY29yZXMgYXJlIGNhbGN1bGF0ZWQuDQoNCjxwIGFsaWduPSJjZW50ZXIiPg0KIVtdKGZpZ3VyZXMvZ2l6MDYxX0Jpb1BBTl90ZWNoaW5jYWxfZGV0YWlscy5QTkcpDQo8L3A+DQoNCk1vcmUgaW5mb3JtYXRpb24gY2FuIGJlIGZvdW5kIGluIHRoaXMgW3BhcGVyXShodHRwczovL2RvaS5vcmcvMTAuMTAxNi9qLmNvcGJpby4yMDE2LjEwLjAwMykgW0BOR1VZRU4yMDE3OTZdDQoNCiMgUGFja2FnZXMNCg0KYGBge3Igd2FybmluZz1GQUxTRSwgbWVzc2FnZT1GQUxTRSwgcmVzdWx0cz0nYXNpcyd9DQpsaWJyYXJ5KGRwbHlyKQ0KbGlicmFyeShtYWdyaXR0cikNCmxpYnJhcnkocmVwb3J0KQ0Kc3VtbWFyeShyZXBvcnQ6OnJlcG9ydChzZXNzaW9uSW5mbygpKSkNCmBgYA0KDQojIERhdGEgey50YWJzZXR9DQoNCmBgYHtyIGNoaWxkPWlmIChmYXN0ID09IEZBTFNFKSAnMV9hYm91dF9kYXRhLlJtZCd9DQoNCmBgYA0KDQojIEJpb1BBTiBvbiBMaXBpZCBTcGVjaWVzIHsudGFic2V0fQ0KDQpgYGB7ciBjaGlsZD1pZiAoZmFzdCA9PSBGQUxTRSkgJzJfQmlvUEFOX3NwZWNpZXNfY2FzZS5SbWQnfQ0KDQpgYGANCg0KIyBCaW9QQU4gb24gTGlwaWQgQ2xhc3Mgey50YWJzZXR9DQoNCmBgYHtyIGNoaWxkPWlmIChmYXN0ID09IEZBTFNFKSAnM19CaW9QQU5fY2xhc3NfY2FzZS5SbWQnfQ0KDQpgYGANCg0KIyBSbWFya2Rvd24gVGVtcGxhdGUNCg0KVGhpcyBSbWFya2Rvd24gdGVtcGxhdGUgaXMgY3JlYXRlZCBieSB0aGUgW1JlYWxpdHkgQmVuZGluZyBMYWJdKGh0dHBzOi8vcmVhbGl0eWJlbmRpbmcuZ2l0aHViLmlvLykuIFRoZSB0ZW1wbGF0ZSBjYW4gYmUgZG93bmxvYWQgZnJvbSB0aGUgbGFiJ3MgW2dpdGh1Yl0oaHR0cHM6Ly9naXRodWIuY29tL1JlYWxpdHlCZW5kaW5nL1RlbXBsYXRlUmVzdWx0cyNwYWNrYWdlLXJlZmVyZW5jZXMpIGFjY291bnQuIEZvciBtb3JlIGluZm9ybWF0aW9uIGFib3V0IHRoZSBtb3RpdmF0aW9uIGJlaGluZCBjcmVhdGluZyB0aGlzIHRlbXBsYXRlLCBjaGVjayBvdXQgW0RyLiBEb21pbmlxdWUgTWFrb3dza2kncyBibG9nIHBvc3RdKGh0dHBzOi8vZG9taW5pcXVlbWFrb3dza2kuZ2l0aHViLmlvL3Bvc3QvdGVtcGxhdGVfcmVzdWx0cy8pDQoNCiMgUGFja2FnZSBSZWZlcmVuY2VzDQpgYGB7ciB3YXJuaW5nPUZBTFNFLCBtZXNzYWdlPVRSVUUsIHJlc3VsdHM9J2FzaXMnfQ0KcmVwb3J0OjpjaXRlX3BhY2thZ2VzKHNlc3Npb25JbmZvKCkpDQpgYGANCg0KDQojIFJlZmVyZW5jZXMNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogJyoqQmlvUEFOIFR1dG9yaWFsKionDQpzdWJ0aXRsZTogVGhpcyBkb2N1bWVudCB3YXMgcHJlcGFyZWQgb24gYHIgZm9ybWF0KFN5cy5EYXRlKCkpYC4NCm91dHB1dDoNCiAgaHRtbF9kb2N1bWVudDoNCiAgICB0aGVtZTogY2VydWxlYW4NCiAgICBoaWdobGlnaHQ6IHB5Z21lbnRzDQogICAgdG9jOiB5ZXMNCiAgICB0b2NfZGVwdGg6IDINCiAgICB0b2NfZmxvYXQ6DQogICAgICBjb2xsYXBzZWQ6IHRydWUNCiAgICAgIHNtb290aF9zY3JvbGw6IHRydWUNCiAgICBudW1iZXJfc2VjdGlvbnM6IG5vDQogICAgZGZfcHJpbnQ6IGthYmxlDQogICAgY29kZV9mb2xkaW5nOiBoaWRlDQogICAgY29kZV9kb3dubG9hZDogeWVzDQogICAgc2VsZl9jb250YWluZWQ6IGZhbHNlDQogICAgbGliX2RpcjogImRvY3Mvcm1hcmtkb3duX2xpYnMiDQogIHJtYXJrZG93bjo6aHRtbF92aWduZXR0ZToNCiAgICB0b2M6IHllcw0KICAgIHRvY19kZXB0aDogMg0KZWRpdG9yX29wdGlvbnM6DQogIGNodW5rX291dHB1dF90eXBlOiBjb25zb2xlDQpiaWJsaW9ncmFwaHk6IHV0aWxzL2JpYmxpb2dyYXBoeS5iaWINCmNzbDogdXRpbHMvZjEwMDByZXNlYXJjaC5jc2wNCi0tLQ0KDQoNCjwhLS0gDQohISEhIElNUE9SVEFOVDogcnVuIGBzb3VyY2UoInV0aWxzL3JlbmRlci5SIilgIHRvIHB1Ymxpc2ggaW5zdGVhZCBvZiBjbGlja2luZyBvbiAnS25pdCcNCiMgU2VlIGh0dHBzOi8veWlodWkub3JnL2tuaXRyL29wdGlvbnMvDQotLT4NCg0KYGBge3Igc2V0dXAsIHdhcm5pbmc9RkFMU0UsIG1lc3NhZ2U9VFJVRSwgaW5jbHVkZT1GQUxTRX0NCiMgU2V0IHVwIHRoZSBlbnZpcm9ubWVudA0KDQojIE9wdGlvbnMgcmVsYXRpdmUgdG8gZmlndXJlIHNpemUNCiMgMS42MTggaXMgdGhlIGdvbGRlbiByYXRpbw0KZmlnaGVpZ2h0IDwtIDQNCmZpZ3dpZHRoIDwtIDQgKiAxLjYxOCANCg0KIyBHZW5lcmFsIG9wdGlvbnMNCm9wdGlvbnMoa25pdHIua2FibGUuTkEgPSAiIiwNCiAgICAgICAgZGlnaXRzID0gMywNCiAgICAgICAgdGlkeXZlcnNlLnF1aWV0ID0gVFJVRSkNCg0KIyBDaHVuayBvcHRpb25zIChzZWUgaHR0cHM6Ly95aWh1aS5vcmcva25pdHIvb3B0aW9ucy8jY2h1bmtfb3B0aW9ucykNCmtuaXRyOjpvcHRzX2NodW5rJHNldCgNCiAgY29tbWVudCA9ICI+IiwgICMgVGhlIHByZWZpeCB0byBiZSBhZGRlZCBiZWZvcmUgZWFjaCBsaW5lIG9mIHRoZSB0ZXh0IG91dHB1dC4NCiAgZHBpID0gNjAwLA0KICBmaWcucGF0aCA9ICJmaWd1cmVzLyIsDQogIGZpZy5oZWlnaHQgPSBmaWdoZWlnaHQsDQogIGZpZy53aWR0aCA9IGZpZ3dpZHRoLA0KICAjIFNlZSBodHRwczovL2NvbW11bml0eS5yc3R1ZGlvLmNvbS90L2NlbnRlcmluZy1pbWFnZXMtaW4tYmxvZ2Rvd24tcG9zdC8yMDk2Mg0KICAjIHRvIGxlYXJuIGhvdyB0byBjZW50ZXIgaW1hZ2VzDQogICMgU2VlIGh0dHBzOi8vYm9va2Rvd24ub3JnL3lpaHVpL3JtYXJrZG93bi1jb29rYm9vay9vcHRzLXRpZHkuaHRtbA0KICAjIFNlZSBodHRwczovL3d3dy56b3Rlcm8ub3JnL3N0eWxlcyBmb3IgY2l0YXRpb24gc3R5bGUgcmVzcG9zaXRvcnkNCiAgdGlkeT0nc3R5bGVyJywNCiAgdGlkeS5vcHRzPWxpc3Qoc3RyaWN0PVRSVUUpDQopDQoNCmZhc3QgPC0gRkFMU0UgICMgTWFrZSB0aGlzIGZhbHNlIHRvIHNraXAgdGhlIGNodW5rcw0KYGBgDQoNCiMgQWdlbmRhDQoNClRoaXMgZG9jdW1lbnQgaGVscHMgdG8gZXhwbGFpbiBob3cgdGhlIG51bWJlciBkaXNwbGF5ZWQgaW4gdGhlIEJpb1BBTiBzb2Z0d2FyZSBhcmUgY2FsY3VsYXRlZCB1c2luZyBhIHNtYWxsIGRhdGFzZXQgYXMgYW4gZXhhbXBsZS4NCg0KIyBBYm91dCBCaW9QQU4NCg0KW0Jpb1BBTl0oaHR0cHM6Ly9mMTAwMHJlc2VhcmNoLmNvbS9hcnRpY2xlcy8xMC00KSBbQEJJT1BBTl0gaXMgYSB0b29sIGZvdW5kIGluIFtMSVBJRCBNQVBTXShodHRwczovL2xpcGlkbWFwcy5vcmcvYmlvcGFuKSBkZXNpZ25lZCB0byBhdXRvbWF0ZSBiaW9zeW50aGV0aWMgcGF0aHdheSBhbmFseXNpcyBvZiBsaXBpZHMuDQoNCjxwIGFsaWduPSJjZW50ZXIiPg0KIVtdKGZpZ3VyZXMvZ2l6MDYxX0FjdGl2ZVBDdG9QU3RvUEVfcGF0aHdheS5QTkcpDQo8L3A+DQoNCkJlbG93IGlzIGEgW1lvdVR1YmUgdmlkZW9dKGh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9RWZUQ19MdVIzYWspIG9uIGhvdyB0byB1c2UgQmlvUEFOLg0KDQo8cCBhbGlnbj0iY2VudGVyIj4NCjxpZnJhbWUgd2lkdGg9IjU2MCIgaGVpZ2h0PSIzMTUiIHNyYz0iaHR0cHM6Ly93d3cueW91dHViZS5jb20vZW1iZWQvRWZUQ19MdVIzYWsiIGZyYW1lYm9yZGVyPSIwIiBhbGxvd2Z1bGxzY3JlZW4+PC9pZnJhbWU+DQo8L3A+DQoNClRoZSBbZG9jdW1lbnRhdGlvbl0oaHR0cHM6Ly93d3cubGlwaWRtYXBzLm9yZy9iaW9wYW4vZG9jL3N0ZXAzX2J1aWxkLmh0bWwpIG9mIEJpb1BBTiBwcm92aWRlcyBhIHRlY2huaWNhbCBleHBsYW5hdGlvbiBvZiBob3cgdGhlIHBhdGh3YXkgc2NvcmVzIGFyZSBjYWxjdWxhdGVkLg0KDQo8cCBhbGlnbj0iY2VudGVyIj4NCiFbXShmaWd1cmVzL2dpejA2MV9CaW9QQU5fdGVjaGluY2FsX2RldGFpbHMuUE5HKQ0KPC9wPg0KDQpNb3JlIGluZm9ybWF0aW9uIGNhbiBiZSBmb3VuZCBpbiB0aGlzIFtwYXBlcl0oaHR0cHM6Ly9kb2kub3JnLzEwLjEwMTYvai5jb3BiaW8uMjAxNi4xMC4wMDMpIFtATkdVWUVOMjAxNzk2XQ0KDQojIFBhY2thZ2VzDQoNCmBgYHtyIHdhcm5pbmc9RkFMU0UsIG1lc3NhZ2U9RkFMU0UsIHJlc3VsdHM9J2FzaXMnfQ0KbGlicmFyeShkcGx5cikNCmxpYnJhcnkobWFncml0dHIpDQpsaWJyYXJ5KHJlcG9ydCkNCnN1bW1hcnkocmVwb3J0OjpyZXBvcnQoc2Vzc2lvbkluZm8oKSkpDQpgYGANCg0KIyBEYXRhIHsudGFic2V0fQ0KDQpgYGB7ciBjaGlsZD1pZiAoZmFzdCA9PSBGQUxTRSkgJzFfYWJvdXRfZGF0YS5SbWQnfQ0KDQpgYGANCg0KIyBCaW9QQU4gb24gTGlwaWQgU3BlY2llcyB7LnRhYnNldH0NCg0KYGBge3IgY2hpbGQ9aWYgKGZhc3QgPT0gRkFMU0UpICcyX0Jpb1BBTl9zcGVjaWVzX2Nhc2UuUm1kJ30NCg0KYGBgDQoNCiMgQmlvUEFOIG9uIExpcGlkIENsYXNzIHsudGFic2V0fQ0KDQpgYGB7ciBjaGlsZD1pZiAoZmFzdCA9PSBGQUxTRSkgJzNfQmlvUEFOX2NsYXNzX2Nhc2UuUm1kJ30NCg0KYGBgDQoNCiMgUm1hcmtkb3duIFRlbXBsYXRlDQoNClRoaXMgUm1hcmtkb3duIHRlbXBsYXRlIGlzIGNyZWF0ZWQgYnkgdGhlIFtSZWFsaXR5IEJlbmRpbmcgTGFiXShodHRwczovL3JlYWxpdHliZW5kaW5nLmdpdGh1Yi5pby8pLiBUaGUgdGVtcGxhdGUgY2FuIGJlIGRvd25sb2FkIGZyb20gdGhlIGxhYidzIFtnaXRodWJdKGh0dHBzOi8vZ2l0aHViLmNvbS9SZWFsaXR5QmVuZGluZy9UZW1wbGF0ZVJlc3VsdHMjcGFja2FnZS1yZWZlcmVuY2VzKSBhY2NvdW50LiBGb3IgbW9yZSBpbmZvcm1hdGlvbiBhYm91dCB0aGUgbW90aXZhdGlvbiBiZWhpbmQgY3JlYXRpbmcgdGhpcyB0ZW1wbGF0ZSwgY2hlY2sgb3V0IFtEci4gRG9taW5pcXVlIE1ha293c2tpJ3MgYmxvZyBwb3N0XShodHRwczovL2RvbWluaXF1ZW1ha293c2tpLmdpdGh1Yi5pby9wb3N0L3RlbXBsYXRlX3Jlc3VsdHMvKQ0KDQojIFBhY2thZ2UgUmVmZXJlbmNlcw0KYGBge3Igd2FybmluZz1GQUxTRSwgbWVzc2FnZT1UUlVFLCByZXN1bHRzPSdhc2lzJ30NCnJlcG9ydDo6Y2l0ZV9wYWNrYWdlcyhzZXNzaW9uSW5mbygpKQ0KYGBgDQoNCg0KIyBSZWZlcmVuY2VzDQo=</div>
 
 
 </div>
