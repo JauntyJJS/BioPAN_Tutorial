@@ -1,0 +1,23 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# BioPAN_Tutorial
+
+The goal of BioPAN_Tutorial is to show how BioPAN works with a small running example.
+
+## Render into html document
+
+There an R script, [utils/render.R](https://github.com/JauntyJJS/BioPAN_Tutorial/tree/master/utils/render.R), that contains the lines to render everything in its correct location. So, when you have the "index.Rmd" file opened (and your working directory is at its root), simply run **`source("utils/render.R")`** in the console (or the relevant lines in that file). This will run the rendering file and create all the files.
+
+
+
