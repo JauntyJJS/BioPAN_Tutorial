@@ -4,9 +4,10 @@
 # BioPAN\_Tutorial
 
 This is the source code for this [web
-page](https://jauntyjjs.github.io/BioPAN_Tutorial/) The goal of
-BioPAN\_Tutorial is to show how BioPAN works with a small running
-example.
+page](https://jauntyjjs.github.io/BioPAN_Tutorial/).
+
+The goal of BioPAN\_Tutorial is to show how BioPAN works with a small
+running example.
 
 ## Render into html document
 
