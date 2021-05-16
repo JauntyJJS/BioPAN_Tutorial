@@ -64,7 +64,7 @@ fast <- FALSE  # Make this false to skip the chunks
 
 # Agenda
 
-This document helps to explain how the number displayed in the BioPAN software are calculated using a small dataset as an example.
+This document helps to explain how the number displayed in the BioPAN software are calculated using a small dataset as an example. The source code of this document can be found in this [GitHub respository](https://github.com/JauntyJJS/BioPAN_Tutorial)
 
 # About BioPAN
 
@@ -117,7 +117,7 @@ summary(report::report(sessionInfo()))
 
 # Rmarkdown Template
 
-This Rmarkdown template is created by the [Reality Bending Lab](https://realitybending.github.io/). The template can be download from the lab's [github](https://github.com/RealityBending/TemplateResults#package-references) account. For more information about the motivation behind creating this template, check out [Dr. Dominique Makowski's blog post](https://dominiquemakowski.github.io/post/template_results/)
+This Rmarkdown template is created by the [Reality Bending Lab](https://realitybending.github.io/). The template can be download from the lab's [github](https://github.com/RealityBending/TemplateResults) repository. For more information about the motivation behind creating this template, check out [Dr. Dominique Makowski's blog post](https://dominiquemakowski.github.io/post/template_results/)
 
 # Package References
 ```{r warning=FALSE, message=TRUE, results='asis'}

@@ -3,12 +3,14 @@
 
 # BioPAN\_Tutorial
 
-The goal of BioPAN\_Tutorial is to show how BioPAN works with a small
-running example.
+This is the source code for this [web
+page](https://jauntyjjs.github.io/BioPAN_Tutorial/) The goal of
+BioPAN\_Tutorial is to show how BioPAN works with a small running
+example.
 
 ## Render into html document
 
-There an R script,
+There is an R script,
 [utils/render.R](https://github.com/JauntyJJS/BioPAN_Tutorial/tree/master/utils/render.R),
 that contains the lines to render everything in its correct location.
 So, when you have the “index.Rmd” file opened (and your working
