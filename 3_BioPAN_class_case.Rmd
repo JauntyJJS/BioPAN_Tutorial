@@ -8,9 +8,7 @@ editor_options:
 
 Let us consider the pathway of `PC` to `PS` to `PE`.
 
-<p align="center">
 ![](figures/giz061_ActivePCtoPStoPE_pathway.PNG)
-</p>
 
 The dataset are as follows:
 

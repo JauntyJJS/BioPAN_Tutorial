@@ -10,37 +10,27 @@ The data used in this tutorial is taken from this [paper](https://academic.oup.c
 
 To download the data, scroll down to the "Supplementary data" Section and click on "giz061_Supplemental_Files"
 
-<p align="center">
 ![](figures/giz061_Supplemental_Files.PNG)
-</p>
 
 Unzip the folder and go to Supplemental Data 6.csv
 
-<p align="center">
 ![](figures/giz061_Supplemental_Data6.PNG)
-</p>
 
 ## Data Preview
 
 The data should look like this when opened
 
-<p align="center">
 ![](figures/giz061_Supplemental_Data6_open.PNG)
-</p>
 
 For this tutorial, a small subset is used
 
-<p align="center">
 ![](figures/giz061_Supplemental_Data6_subset.PNG)
-</p>
 
 ## Data Description
 
 Description for each column can be found [here](http://gigadb.org/dataset/view/id/100599/Sample_page/2)
 
-<p align="center">
 ![](figures/giz061_Supplemental_Files_SampleDescription.PNG)
-</p>
 
 
 

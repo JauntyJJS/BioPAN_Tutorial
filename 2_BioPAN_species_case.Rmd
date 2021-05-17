@@ -8,9 +8,7 @@ editor_options:
 
 Let us consider the pathway of `PS(42:8)` to `PE(42:8)` to `PC(42:8)`.
 
-<p align="center">
 ![](figures/giz061_Active42_8_pathway.PNG)
-</p>
 
 The dataset are as follows:
 
@@ -126,9 +124,7 @@ cat(paste("Z-score is", z_a))
 
 Let us consider the pathway of `PS(32:0)` to `PE(32:0)` to `PC(32:0)`.
 
-<p align="center">
 ![](figures/giz061_Suppressed32_0_pathway.PNG)
-</p>
 
 The dataset are as follows:
 
@@ -166,9 +162,7 @@ suppressed_data
 
 BioPAN will give a warning on the duplicated transition `PC(32:0)` and sum them up.
 
-<p align="center">
 ![](figures/giz061_32_0_warning.PNG)
-</p>
 
 ```{r label=Suppressed_Species_Data_2, fig.height=figheight, fig.width=figwidth, message=FALSE, warning=FALSE, dpi=150}
 
