@@ -41,7 +41,7 @@ figwidth <- 4 * 1.618
 
 # General options
 options(knitr.kable.NA = "",
-        digits = 3,
+        nsmall = 3,
         tidyverse.quiet = TRUE)
 
 # Chunk options (see https://yihui.org/knitr/options/#chunk_options)

@@ -65,7 +65,7 @@ active_data %>%
   dplyr::select(-c(.data$`PE`))
 ```
 
-**Compute a one-sided Welch t-test between the samples of interest and the control samples.**
+**Compute a one-sided Welch $t$-test between the samples of interest (Group AA) and the control samples (Group CON).**
 
 ```{r label=t.test_PS_over_PC, message=FALSE, warning=FALSE, results='asis'}
 
@@ -78,14 +78,17 @@ control_samples <- active_data %>%
   dplyr::pull(.data$`PS over PC`)
 
 t1 <- t.test(aa_samples, control_samples, alternative = "greater")
-cat(paste("p value is", format(t1$p.value, scientific = TRUE, digits = 3)))
 report::report(t1)
+cat(paste("$p$ value is", format(t1$p.value, scientific = TRUE, nsmall = 3)))
 ```
 
-**Convert the p value into a Z Score.**
+**Convert the $p$ value into a $Z$ score.**
+
+This is also the pathway score for `PC` to `PS`.
+
 ```{r label=Zscore_PS_over_PC, message=FALSE, warning=FALSE, results='asis'}
 z_score1 <- qnorm(1 - t1$p.value)
-cat(paste("Z-score for  is", z_score1))
+cat(paste("$Z$ score for `PC` to `PS` is", format(z_score1, nsmall = 3)))
 ```
 
 ### `PS` to `PE`
@@ -101,7 +104,7 @@ active_data %>%
   dplyr::select(-c(.data$`PC`,.data$`PS over PC`))
 ```
 
-**Compute a one-sided Welch t-test between the samples of interest and the control samples.**
+**Compute a one-sided Welch $t$-test between the samples of interest (Group AA) and the control samples (Group CON).**
 
 ```{r label=t.test_PE_over_PS, message=FALSE, warning=FALSE, results='asis'}
 
@@ -114,19 +117,34 @@ control_samples <- active_data %>%
   dplyr::pull(.data$`PE over PS`)
 
 t2 <- t.test(aa_samples, control_samples, alternative = "greater")
-cat(paste("p value is", format(t2$p.value, scientific = TRUE, digits = 3)))
 report::report(t2)
+cat(paste("$p$ value is", format(t2$p.value, scientific = TRUE, nsmall = 3)))
 ```
 
-**Convert the p value into a Z Score.**
+**Convert the $p$ value into a $Z$ score.**
+
+This is also the pathway score for `PS` to `PE`.
+
 ```{r label=Zscore_PE_over_PS, message=FALSE, warning=FALSE, results='asis'}
 z_score2 <- qnorm(1 - t2$p.value)
-cat(paste("Z-score is", z_score2))
+cat(paste("$Z$ score for `PS` to `PE` is", format(z_score2, nsmall = 3)))
 ```
 
-**Compute Z-Score for pathway `PC` to `PS` to `PE`.**
+**Compute $Z_{A}$ for pathway `PC` to `PS` to `PE`.**
+
+Recall the formula is defined as:
+
+![](figures/giz061_BioPAN_ZA_score.PNG)
+
+where $k$ is 2 and $Z_{i}$ are the pathway scores `PC` to `PS` and `PS` to `PE` computed earlier. 
 
 ```{r label=Zscore_active_pathway_class, message=FALSE, warning=FALSE, results='asis'}
 z_a <- (1/sqrt(2)) * (z_score1 + z_score2)
-cat(paste("Z-score is", z_a))
+cat(paste("$Z_{A}$ is", format(z_a, nsmall = 4)))
 ```
+
+With this settings,
+
+![](figures/giz061_Pvalue_0_05.PNG)
+
+Since $Z_{A} > 1.645$, the pathway is classified as active.
