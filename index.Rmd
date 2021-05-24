@@ -71,7 +71,7 @@ This document helps to explain how the number displayed in the BioPAN software a
 
 [BioPAN](https://f1000research.com/articles/10-4) [@BIOPAN] is a tool found in [LIPID MAPS](https://lipidmaps.org/biopan) designed to automate biosynthetic pathway analysis of lipids.
 
-![](https://github.com/JauntyJJS/BioPAN_Tutorial/tree/master/figures/giz061_ActivePCtoPStoPE_pathway.PNG)
+![](https://raw.githubusercontent.com/JauntyJJS/BioPAN_Tutorial/bde58b7629b32a3bed262cc1d8f045933ab7f4ad/figures/giz061_ActivePCtoPStoPE_pathway.PNG)
 
 Below is a [YouTube video](https://www.youtube.com/watch?v=EfTC_LuR3ak) on how to use BioPAN.
 
