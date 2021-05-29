@@ -76,7 +76,7 @@ This document helps to explain how the number displayed in the BioPAN software a
 Below is a [YouTube video](https://www.youtube.com/watch?v=EfTC_LuR3ak) on how to use BioPAN.
 
 <p align="center">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/EfTC_LuR3ak" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3OrjRzbCB04" frameborder="0" allowfullscreen></iframe>
 </p>
 
 The [documentation](https://www.lipidmaps.org/biopan/doc/step3_build.html) of BioPAN provides a technical explanation of how the pathway scores are calculated.
