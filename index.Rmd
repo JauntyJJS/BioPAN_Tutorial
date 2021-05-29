@@ -73,7 +73,7 @@ This document helps to explain how the number displayed in the BioPAN software a
 
 ![](figures/giz061_ActivePCtoPStoPE_pathway.PNG)
 
-Below is a [YouTube video](https://www.youtube.com/watch?v=EfTC_LuR3ak) on how to use BioPAN.
+Below is a [YouTube video](https://www.youtube.com/watch?v=3OrjRzbCB04) on how to use BioPAN.
 
 <p align="center">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/3OrjRzbCB04" frameborder="0" allowfullscreen></iframe>
