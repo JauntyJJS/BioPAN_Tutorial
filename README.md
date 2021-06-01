@@ -12,7 +12,7 @@ running example.
 ## Render into html document
 
 There is an R script,
-[utils/render.R](https://github.com/JauntyJJS/BioPAN_Tutorial/tree/master/utils/render.R),
+[utils/render.R](https://github.com/JauntyJJS/BioPAN_Tutorial/tree/main/utils/render.R),
 that contains the lines to render everything in its correct location.
 So, when you have the “index.Rmd” file opened (and your working
 directory is at its root), simply run **`source("utils/render.R")`** in
