@@ -13,8 +13,8 @@
 
 <title>BioPAN Tutorial</title>
 
-<script src="rmarkdown_libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="rmarkdown_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="rmarkdown_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="rmarkdown_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="rmarkdown_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="rmarkdown_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -44,6 +44,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -205,6 +206,9 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
 pre code {
   padding: 0;
 }
@@ -349,12 +353,12 @@ div.tocify {
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
-<div class="col-sm-12 col-md-4 col-lg-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -362,7 +366,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -374,7 +378,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore"><strong>BioPAN Tutorial</strong></h1>
-<h3 class="subtitle">This document was prepared on 2021-06-01.</h3>
+<h3 class="subtitle">This document was prepared on 2022-03-30.</h3>
 
 </div>
 
@@ -402,11 +406,12 @@ div.tocify {
 </div>
 <div id="packages" class="section level1">
 <h1>Packages</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(report)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(report<span class="sc">::</span><span class="fu">report</span>(<span class="fu">sessionInfo</span>()))</span></code></pre></div>
-<p>The analysis was done using the R Statistical language (v4.0.5; R Core Team, 2021) on Windows 10 x64, using the packages dplyr (v1.0.6), rmarkdown (v2.7), report (v0.3.0) and magrittr (v2.0.1).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(styler)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(report)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(report<span class="sc">::</span><span class="fu">report</span>(<span class="fu">sessionInfo</span>()))</span></code></pre></div>
+<p>The analysis was done using the R Statistical language (v4.1.3; R Core Team, 2022) on Windows 10 x64, using the packages dplyr (v1.0.6), rmarkdown (v2.13), styler (v1.7.0), report (v0.3.0) and magrittr (v2.0.1).</p>
 </div>
 <div id="data" class="section level1 tabset">
 <h1 class="tabset">Data</h1>
@@ -1384,16 +1389,17 @@ div.tocify {
 </div>
 <div id="rmarkdown-template" class="section level1">
 <h1>Rmarkdown Template</h1>
-<p>This Rmarkdown template is created by the <a href="https://realitybending.github.io/">Reality Bending Lab</a>. The template can be download from the lab’s <a href="https://github.com/RealityBending/TemplateResults">github</a> repository. For more information about the motivation behind creating this template, check out <a href="https://dominiquemakowski.github.io/post/template_results/">Dr. Dominique Makowski’s blog post</a></p>
+<p>This Rmarkdown template is created by the <a href="https://realitybending.github.io/">Reality Bending Lab</a>. The template can be download from the lab’s <a href="https://github.com/RealityBending/TemplateResults">github</a> repository. For more information about the motivation behind creating this template, check out <a href="https://dominiquemakowski.github.io/post/2021-02-10-template_results/">Dr. Dominique Makowski’s blog post</a></p>
 </div>
 <div id="package-references" class="section level1">
 <h1>Package References</h1>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>report<span class="sc">::</span><span class="fu">cite_packages</span>(<span class="fu">sessionInfo</span>())</span></code></pre></div>
 <ul>
 <li>Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2021). dplyr: A Grammar of Data Manipulation. R package version 1.0.6. <a href="https://CRAN.R-project.org/package=dplyr" class="uri">https://CRAN.R-project.org/package=dplyr</a></li>
-<li>JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin Ushey and Aron Atkins and Hadley Wickham and Joe Cheng and Winston Chang and Richard Iannone (2021). rmarkdown: Dynamic Documents for R. R package version 2.7. URL <a href="https://rmarkdown.rstudio.com" class="uri">https://rmarkdown.rstudio.com</a>.</li>
+<li>JJ Allaire and Yihui Xie and Jonathan McPherson and Javier Luraschi and Kevin Ushey and Aron Atkins and Hadley Wickham and Joe Cheng and Winston Chang and Richard Iannone (2022). rmarkdown: Dynamic Documents for R. R package version 2.13. URL <a href="https://rmarkdown.rstudio.com" class="uri">https://rmarkdown.rstudio.com</a>.</li>
+<li>Kirill Müller and Lorenz Walthert (2022). styler: Non-Invasive Pretty Printing of R Code. R package version 1.7.0. <a href="https://CRAN.R-project.org/package=styler" class="uri">https://CRAN.R-project.org/package=styler</a></li>
 <li>Makowski, D., Ben-Shachar, M.S., Patil, I. &amp; Lüdecke, D. (2020). Automated Results Reporting as a Practical Tool to Improve Reproducibility and Methodological Best Practices Adoption. CRAN. Available from <a href="https://github.com/easystats/report" class="uri">https://github.com/easystats/report</a>. doi: .</li>
-<li>R Core Team (2021). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</li>
+<li>R Core Team (2022). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</li>
 <li>Stefan Milton Bache and Hadley Wickham (2020). magrittr: A Forward-Pipe Operator for R. R package version 2.0.1. <a href="https://CRAN.R-project.org/package=magrittr" class="uri">https://CRAN.R-project.org/package=magrittr</a></li>
 </ul>
 </div>
@@ -1412,7 +1418,7 @@ div.tocify {
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogJyoqQmlvUEFOIFR1dG9yaWFsKionDQpzdWJ0aXRsZTogVGhpcyBkb2N1bWVudCB3YXMgcHJlcGFyZWQgb24gYHIgZm9ybWF0KFN5cy5EYXRlKCkpYC4NCm91dHB1dDoNCiAgaHRtbF9kb2N1bWVudDoNCiAgICB0aGVtZTogY2VydWxlYW4NCiAgICBoaWdobGlnaHQ6IHB5Z21lbnRzDQogICAgdG9jOiB5ZXMNCiAgICB0b2NfZGVwdGg6IDINCiAgICB0b2NfZmxvYXQ6DQogICAgICBjb2xsYXBzZWQ6IHRydWUNCiAgICAgIHNtb290aF9zY3JvbGw6IHRydWUNCiAgICBudW1iZXJfc2VjdGlvbnM6IG5vDQogICAgZGZfcHJpbnQ6IGthYmxlDQogICAgY29kZV9mb2xkaW5nOiBoaWRlDQogICAgY29kZV9kb3dubG9hZDogeWVzDQogICAgc2VsZl9jb250YWluZWQ6IGZhbHNlDQogICAgbGliX2RpcjogImRvY3Mvcm1hcmtkb3duX2xpYnMiDQogIHJtYXJrZG93bjo6aHRtbF92aWduZXR0ZToNCiAgICB0b2M6IHllcw0KICAgIHRvY19kZXB0aDogMg0KZWRpdG9yX29wdGlvbnM6DQogIGNodW5rX291dHB1dF90eXBlOiBjb25zb2xlDQpiaWJsaW9ncmFwaHk6IHV0aWxzL2JpYmxpb2dyYXBoeS5iaWINCmNzbDogdXRpbHMvZjEwMDByZXNlYXJjaC5jc2wNCi0tLQ0KDQoNCjwhLS0gDQohISEhIElNUE9SVEFOVDogcnVuIGBzb3VyY2UoInV0aWxzL3JlbmRlci5SIilgIHRvIHB1Ymxpc2ggaW5zdGVhZCBvZiBjbGlja2luZyBvbiAnS25pdCcNCiMgU2VlIGh0dHBzOi8veWlodWkub3JnL2tuaXRyL29wdGlvbnMvDQotLT4NCg0KYGBge3Igc2V0dXAsIHdhcm5pbmc9RkFMU0UsIG1lc3NhZ2U9VFJVRSwgaW5jbHVkZT1GQUxTRX0NCiMgU2V0IHVwIHRoZSBlbnZpcm9ubWVudA0KDQojIE9wdGlvbnMgcmVsYXRpdmUgdG8gZmlndXJlIHNpemUNCiMgMS42MTggaXMgdGhlIGdvbGRlbiByYXRpbw0KZmlnaGVpZ2h0IDwtIDQNCmZpZ3dpZHRoIDwtIDQgKiAxLjYxOCANCg0KIyBHZW5lcmFsIG9wdGlvbnMNCm9wdGlvbnMoa25pdHIua2FibGUuTkEgPSAiIiwNCiAgICAgICAgbnNtYWxsID0gMywNCiAgICAgICAgdGlkeXZlcnNlLnF1aWV0ID0gVFJVRSkNCg0KIyBDaHVuayBvcHRpb25zIChzZWUgaHR0cHM6Ly95aWh1aS5vcmcva25pdHIvb3B0aW9ucy8jY2h1bmtfb3B0aW9ucykNCmtuaXRyOjpvcHRzX2NodW5rJHNldCgNCiAgY29tbWVudCA9ICI+IiwgICMgVGhlIHByZWZpeCB0byBiZSBhZGRlZCBiZWZvcmUgZWFjaCBsaW5lIG9mIHRoZSB0ZXh0IG91dHB1dC4NCiAgZHBpID0gNjAwLA0KICBmaWcucGF0aCA9ICJmaWd1cmVzLyIsDQogIGZpZy5oZWlnaHQgPSBmaWdoZWlnaHQsDQogIGZpZy53aWR0aCA9IGZpZ3dpZHRoLA0KICBmaWcuYWxpZ24gPSAiY2VudGVyIiwNCiAgIyBTZWUgaHR0cHM6Ly9jb21tdW5pdHkucnN0dWRpby5jb20vdC9jZW50ZXJpbmctaW1hZ2VzLWluLWJsb2dkb3duLXBvc3QvMjA5NjINCiAgIyB0byBsZWFybiBob3cgdG8gY2VudGVyIGltYWdlcw0KICAjIFNlZSBodHRwczovL2Jvb2tkb3duLm9yZy95aWh1aS9ybWFya2Rvd24tY29va2Jvb2svb3B0cy10aWR5Lmh0bWwNCiAgIyBTZWUgaHR0cHM6Ly93d3cuem90ZXJvLm9yZy9zdHlsZXMgZm9yIGNpdGF0aW9uIHN0eWxlIHJlc3Bvc2l0b3J5DQogIHRpZHk9J3N0eWxlcicsDQogIHRpZHkub3B0cz1saXN0KHN0cmljdD1UUlVFKQ0KKQ0KDQpmYXN0IDwtIEZBTFNFICAjIE1ha2UgdGhpcyBmYWxzZSB0byBza2lwIHRoZSBjaHVua3MNCmBgYA0KDQojIEFnZW5kYQ0KDQpUaGlzIGRvY3VtZW50IGhlbHBzIHRvIGV4cGxhaW4gaG93IHRoZSBudW1iZXIgZGlzcGxheWVkIGluIHRoZSBCaW9QQU4gc29mdHdhcmUgYXJlIGNhbGN1bGF0ZWQgdXNpbmcgYSBzbWFsbCBkYXRhc2V0IGFzIGFuIGV4YW1wbGUuIFRoZSBzb3VyY2UgY29kZSBvZiB0aGlzIGRvY3VtZW50IGNhbiBiZSBmb3VuZCBpbiB0aGlzIFtHaXRIdWIgcmVzcG9zaXRvcnldKGh0dHBzOi8vZ2l0aHViLmNvbS9KYXVudHlKSlMvQmlvUEFOX1R1dG9yaWFsKQ0KDQojIEFib3V0IEJpb1BBTg0KDQpbQmlvUEFOXShodHRwczovL2YxMDAwcmVzZWFyY2guY29tL2FydGljbGVzLzEwLTQpIFtAQklPUEFOXSBpcyBhIHRvb2wgZm91bmQgaW4gW0xJUElEIE1BUFNdKGh0dHBzOi8vbGlwaWRtYXBzLm9yZy9iaW9wYW4pIGRlc2lnbmVkIHRvIGF1dG9tYXRlIGJpb3N5bnRoZXRpYyBwYXRod2F5IGFuYWx5c2lzIG9mIGxpcGlkcy4NCg0KIVtdKGZpZ3VyZXMvZ2l6MDYxX0FjdGl2ZVBDdG9QU3RvUEVfcGF0aHdheS5QTkcpDQoNCkJlbG93IGlzIGEgW1lvdVR1YmUgdmlkZW9dKGh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9M09yalJ6YkNCMDQpIG9uIGhvdyB0byB1c2UgQmlvUEFOLg0KDQo8cCBhbGlnbj0iY2VudGVyIj4NCjxpZnJhbWUgd2lkdGg9IjU2MCIgaGVpZ2h0PSIzMTUiIHNyYz0iaHR0cHM6Ly93d3cueW91dHViZS5jb20vZW1iZWQvM09yalJ6YkNCMDQiIGZyYW1lYm9yZGVyPSIwIiBhbGxvd2Z1bGxzY3JlZW4+PC9pZnJhbWU+DQo8L3A+DQoNClRoZSBbZG9jdW1lbnRhdGlvbl0oaHR0cHM6Ly93d3cubGlwaWRtYXBzLm9yZy9iaW9wYW4vZG9jL3N0ZXAzX2J1aWxkLmh0bWwpIG9mIEJpb1BBTiBwcm92aWRlcyBhIHRlY2huaWNhbCBleHBsYW5hdGlvbiBvZiBob3cgdGhlIHBhdGh3YXkgc2NvcmVzIGFyZSBjYWxjdWxhdGVkLg0KDQohW10oZmlndXJlcy9naXowNjFfQmlvUEFOX3RlY2hpbmNhbF9kZXRhaWxzLlBORykNCg0KTW9yZSBpbmZvcm1hdGlvbiBjYW4gYmUgZm91bmQgaW4gdGhpcyBbcGFwZXJdKGh0dHBzOi8vZG9pLm9yZy8xMC4xMDE2L2ouY29wYmlvLjIwMTYuMTAuMDAzKSBbQE5HVVlFTjIwMTc5Nl0NCg0KIyBQYWNrYWdlcw0KDQpgYGB7ciB3YXJuaW5nPUZBTFNFLCBtZXNzYWdlPUZBTFNFLCByZXN1bHRzPSdhc2lzJ30NCmxpYnJhcnkoZHBseXIpDQpsaWJyYXJ5KG1hZ3JpdHRyKQ0KbGlicmFyeShyZXBvcnQpDQpzdW1tYXJ5KHJlcG9ydDo6cmVwb3J0KHNlc3Npb25JbmZvKCkpKQ0KYGBgDQoNCiMgRGF0YSB7LnRhYnNldH0NCg0KYGBge3IgY2hpbGQ9aWYgKGZhc3QgPT0gRkFMU0UpICcxX2Fib3V0X2RhdGEuUm1kJ30NCg0KYGBgDQoNCiMgQmlvUEFOIG9uIExpcGlkIFNwZWNpZXMgey50YWJzZXR9DQoNCmBgYHtyIGNoaWxkPWlmIChmYXN0ID09IEZBTFNFKSAnMl9CaW9QQU5fc3BlY2llc19jYXNlLlJtZCd9DQoNCmBgYA0KDQojIEJpb1BBTiBvbiBMaXBpZCBDbGFzcyB7LnRhYnNldH0NCg0KYGBge3IgY2hpbGQ9aWYgKGZhc3QgPT0gRkFMU0UpICczX0Jpb1BBTl9jbGFzc19jYXNlLlJtZCd9DQoNCmBgYA0KDQojIFJtYXJrZG93biBUZW1wbGF0ZQ0KDQpUaGlzIFJtYXJrZG93biB0ZW1wbGF0ZSBpcyBjcmVhdGVkIGJ5IHRoZSBbUmVhbGl0eSBCZW5kaW5nIExhYl0oaHR0cHM6Ly9yZWFsaXR5YmVuZGluZy5naXRodWIuaW8vKS4gVGhlIHRlbXBsYXRlIGNhbiBiZSBkb3dubG9hZCBmcm9tIHRoZSBsYWIncyBbZ2l0aHViXShodHRwczovL2dpdGh1Yi5jb20vUmVhbGl0eUJlbmRpbmcvVGVtcGxhdGVSZXN1bHRzKSByZXBvc2l0b3J5LiBGb3IgbW9yZSBpbmZvcm1hdGlvbiBhYm91dCB0aGUgbW90aXZhdGlvbiBiZWhpbmQgY3JlYXRpbmcgdGhpcyB0ZW1wbGF0ZSwgY2hlY2sgb3V0IFtEci4gRG9taW5pcXVlIE1ha293c2tpJ3MgYmxvZyBwb3N0XShodHRwczovL2RvbWluaXF1ZW1ha293c2tpLmdpdGh1Yi5pby9wb3N0L3RlbXBsYXRlX3Jlc3VsdHMvKQ0KDQojIFBhY2thZ2UgUmVmZXJlbmNlcw0KYGBge3Igd2FybmluZz1GQUxTRSwgbWVzc2FnZT1UUlVFLCByZXN1bHRzPSdhc2lzJ30NCnJlcG9ydDo6Y2l0ZV9wYWNrYWdlcyhzZXNzaW9uSW5mbygpKQ0KYGBgDQoNCg0KIyBSZWZlcmVuY2VzDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogJyoqQmlvUEFOIFR1dG9yaWFsKionDQpzdWJ0aXRsZTogVGhpcyBkb2N1bWVudCB3YXMgcHJlcGFyZWQgb24gYHIgZm9ybWF0KFN5cy5EYXRlKCkpYC4NCm91dHB1dDoNCiAgaHRtbF9kb2N1bWVudDoNCiAgICB0aGVtZTogY2VydWxlYW4NCiAgICBoaWdobGlnaHQ6IHB5Z21lbnRzDQogICAgdG9jOiB5ZXMNCiAgICB0b2NfZGVwdGg6IDINCiAgICB0b2NfZmxvYXQ6DQogICAgICBjb2xsYXBzZWQ6IHRydWUNCiAgICAgIHNtb290aF9zY3JvbGw6IHRydWUNCiAgICBudW1iZXJfc2VjdGlvbnM6IG5vDQogICAgZGZfcHJpbnQ6IGthYmxlDQogICAgY29kZV9mb2xkaW5nOiBoaWRlDQogICAgY29kZV9kb3dubG9hZDogeWVzDQogICAgc2VsZl9jb250YWluZWQ6IGZhbHNlDQogICAgbGliX2RpcjogImRvY3Mvcm1hcmtkb3duX2xpYnMiDQogIHJtYXJrZG93bjo6aHRtbF92aWduZXR0ZToNCiAgICB0b2M6IHllcw0KICAgIHRvY19kZXB0aDogMg0KZWRpdG9yX29wdGlvbnM6DQogIGNodW5rX291dHB1dF90eXBlOiBjb25zb2xlDQpiaWJsaW9ncmFwaHk6IHV0aWxzL2JpYmxpb2dyYXBoeS5iaWINCmNzbDogdXRpbHMvZjEwMDByZXNlYXJjaC5jc2wNCi0tLQ0KDQoNCjwhLS0gDQohISEhIElNUE9SVEFOVDogcnVuIGBzb3VyY2UoInV0aWxzL3JlbmRlci5SIilgIHRvIHB1Ymxpc2ggaW5zdGVhZCBvZiBjbGlja2luZyBvbiAnS25pdCcNCiMgU2VlIGh0dHBzOi8veWlodWkub3JnL2tuaXRyL29wdGlvbnMvDQotLT4NCg0KYGBge3Igc2V0dXAsIHdhcm5pbmc9RkFMU0UsIG1lc3NhZ2U9VFJVRSwgaW5jbHVkZT1GQUxTRX0NCiMgU2V0IHVwIHRoZSBlbnZpcm9ubWVudA0KDQojIE9wdGlvbnMgcmVsYXRpdmUgdG8gZmlndXJlIHNpemUNCiMgMS42MTggaXMgdGhlIGdvbGRlbiByYXRpbw0KZmlnaGVpZ2h0IDwtIDQNCmZpZ3dpZHRoIDwtIDQgKiAxLjYxOCANCg0KIyBHZW5lcmFsIG9wdGlvbnMNCm9wdGlvbnMoa25pdHIua2FibGUuTkEgPSAiIiwNCiAgICAgICAgbnNtYWxsID0gMywNCiAgICAgICAgdGlkeXZlcnNlLnF1aWV0ID0gVFJVRSkNCg0KIyBDaHVuayBvcHRpb25zIChzZWUgaHR0cHM6Ly95aWh1aS5vcmcva25pdHIvb3B0aW9ucy8jY2h1bmtfb3B0aW9ucykNCmtuaXRyOjpvcHRzX2NodW5rJHNldCgNCiAgY29tbWVudCA9ICI+IiwgICMgVGhlIHByZWZpeCB0byBiZSBhZGRlZCBiZWZvcmUgZWFjaCBsaW5lIG9mIHRoZSB0ZXh0IG91dHB1dC4NCiAgZHBpID0gNjAwLA0KICBmaWcucGF0aCA9ICJmaWd1cmVzLyIsDQogIGZpZy5oZWlnaHQgPSBmaWdoZWlnaHQsDQogIGZpZy53aWR0aCA9IGZpZ3dpZHRoLA0KICBmaWcuYWxpZ24gPSAiY2VudGVyIiwNCiAgIyBTZWUgaHR0cHM6Ly9jb21tdW5pdHkucnN0dWRpby5jb20vdC9jZW50ZXJpbmctaW1hZ2VzLWluLWJsb2dkb3duLXBvc3QvMjA5NjINCiAgIyB0byBsZWFybiBob3cgdG8gY2VudGVyIGltYWdlcw0KICAjIFNlZSBodHRwczovL2Jvb2tkb3duLm9yZy95aWh1aS9ybWFya2Rvd24tY29va2Jvb2svb3B0cy10aWR5Lmh0bWwNCiAgIyBTZWUgaHR0cHM6Ly93d3cuem90ZXJvLm9yZy9zdHlsZXMgZm9yIGNpdGF0aW9uIHN0eWxlIHJlc3Bvc2l0b3J5DQogIHRpZHk9J3N0eWxlcicsDQogIHRpZHkub3B0cz1saXN0KHN0cmljdD1UUlVFKQ0KKQ0KDQpmYXN0IDwtIEZBTFNFICAjIE1ha2UgdGhpcyBmYWxzZSB0byBza2lwIHRoZSBjaHVua3MNCmBgYA0KDQojIEFnZW5kYQ0KDQpUaGlzIGRvY3VtZW50IGhlbHBzIHRvIGV4cGxhaW4gaG93IHRoZSBudW1iZXIgZGlzcGxheWVkIGluIHRoZSBCaW9QQU4gc29mdHdhcmUgYXJlIGNhbGN1bGF0ZWQgdXNpbmcgYSBzbWFsbCBkYXRhc2V0IGFzIGFuIGV4YW1wbGUuIFRoZSBzb3VyY2UgY29kZSBvZiB0aGlzIGRvY3VtZW50IGNhbiBiZSBmb3VuZCBpbiB0aGlzIFtHaXRIdWIgcmVzcG9zaXRvcnldKGh0dHBzOi8vZ2l0aHViLmNvbS9KYXVudHlKSlMvQmlvUEFOX1R1dG9yaWFsKQ0KDQojIEFib3V0IEJpb1BBTg0KDQpbQmlvUEFOXShodHRwczovL2YxMDAwcmVzZWFyY2guY29tL2FydGljbGVzLzEwLTQpIFtAQklPUEFOXSBpcyBhIHRvb2wgZm91bmQgaW4gW0xJUElEIE1BUFNdKGh0dHBzOi8vbGlwaWRtYXBzLm9yZy9iaW9wYW4pIGRlc2lnbmVkIHRvIGF1dG9tYXRlIGJpb3N5bnRoZXRpYyBwYXRod2F5IGFuYWx5c2lzIG9mIGxpcGlkcy4NCg0KIVtdKGZpZ3VyZXMvZ2l6MDYxX0FjdGl2ZVBDdG9QU3RvUEVfcGF0aHdheS5QTkcpDQoNCkJlbG93IGlzIGEgW1lvdVR1YmUgdmlkZW9dKGh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9M09yalJ6YkNCMDQpIG9uIGhvdyB0byB1c2UgQmlvUEFOLg0KDQo8cCBhbGlnbj0iY2VudGVyIj4NCjxpZnJhbWUgd2lkdGg9IjU2MCIgaGVpZ2h0PSIzMTUiIHNyYz0iaHR0cHM6Ly93d3cueW91dHViZS5jb20vZW1iZWQvM09yalJ6YkNCMDQiIGZyYW1lYm9yZGVyPSIwIiBhbGxvd2Z1bGxzY3JlZW4+PC9pZnJhbWU+DQo8L3A+DQoNClRoZSBbZG9jdW1lbnRhdGlvbl0oaHR0cHM6Ly93d3cubGlwaWRtYXBzLm9yZy9iaW9wYW4vZG9jL3N0ZXAzX2J1aWxkLmh0bWwpIG9mIEJpb1BBTiBwcm92aWRlcyBhIHRlY2huaWNhbCBleHBsYW5hdGlvbiBvZiBob3cgdGhlIHBhdGh3YXkgc2NvcmVzIGFyZSBjYWxjdWxhdGVkLg0KDQohW10oZmlndXJlcy9naXowNjFfQmlvUEFOX3RlY2hpbmNhbF9kZXRhaWxzLlBORykNCg0KTW9yZSBpbmZvcm1hdGlvbiBjYW4gYmUgZm91bmQgaW4gdGhpcyBbcGFwZXJdKGh0dHBzOi8vZG9pLm9yZy8xMC4xMDE2L2ouY29wYmlvLjIwMTYuMTAuMDAzKSBbQE5HVVlFTjIwMTc5Nl0NCg0KIyBQYWNrYWdlcw0KDQpgYGB7ciB3YXJuaW5nPUZBTFNFLCBtZXNzYWdlPUZBTFNFLCByZXN1bHRzPSdhc2lzJ30NCmxpYnJhcnkoc3R5bGVyKQ0KbGlicmFyeShkcGx5cikNCmxpYnJhcnkobWFncml0dHIpDQpsaWJyYXJ5KHJlcG9ydCkNCnN1bW1hcnkocmVwb3J0OjpyZXBvcnQoc2Vzc2lvbkluZm8oKSkpDQpgYGANCg0KIyBEYXRhIHsudGFic2V0fQ0KDQpgYGB7ciBjaGlsZD1pZiAoZmFzdCA9PSBGQUxTRSkgJzFfYWJvdXRfZGF0YS5SbWQnfQ0KDQpgYGANCg0KIyBCaW9QQU4gb24gTGlwaWQgU3BlY2llcyB7LnRhYnNldH0NCg0KYGBge3IgY2hpbGQ9aWYgKGZhc3QgPT0gRkFMU0UpICcyX0Jpb1BBTl9zcGVjaWVzX2Nhc2UuUm1kJ30NCg0KYGBgDQoNCiMgQmlvUEFOIG9uIExpcGlkIENsYXNzIHsudGFic2V0fQ0KDQpgYGB7ciBjaGlsZD1pZiAoZmFzdCA9PSBGQUxTRSkgJzNfQmlvUEFOX2NsYXNzX2Nhc2UuUm1kJ30NCg0KYGBgDQoNCiMgUm1hcmtkb3duIFRlbXBsYXRlDQoNClRoaXMgUm1hcmtkb3duIHRlbXBsYXRlIGlzIGNyZWF0ZWQgYnkgdGhlIFtSZWFsaXR5IEJlbmRpbmcgTGFiXShodHRwczovL3JlYWxpdHliZW5kaW5nLmdpdGh1Yi5pby8pLiBUaGUgdGVtcGxhdGUgY2FuIGJlIGRvd25sb2FkIGZyb20gdGhlIGxhYidzIFtnaXRodWJdKGh0dHBzOi8vZ2l0aHViLmNvbS9SZWFsaXR5QmVuZGluZy9UZW1wbGF0ZVJlc3VsdHMpIHJlcG9zaXRvcnkuIEZvciBtb3JlIGluZm9ybWF0aW9uIGFib3V0IHRoZSBtb3RpdmF0aW9uIGJlaGluZCBjcmVhdGluZyB0aGlzIHRlbXBsYXRlLCBjaGVjayBvdXQgW0RyLiBEb21pbmlxdWUgTWFrb3dza2kncyBibG9nIHBvc3RdKGh0dHBzOi8vZG9taW5pcXVlbWFrb3dza2kuZ2l0aHViLmlvL3Bvc3QvMjAyMS0wMi0xMC10ZW1wbGF0ZV9yZXN1bHRzLykNCg0KIyBQYWNrYWdlIFJlZmVyZW5jZXMNCmBgYHtyIHdhcm5pbmc9RkFMU0UsIG1lc3NhZ2U9VFJVRSwgcmVzdWx0cz0nYXNpcyd9DQpyZXBvcnQ6OmNpdGVfcGFja2FnZXMoc2Vzc2lvbkluZm8oKSkNCmBgYA0KDQoNCiMgUmVmZXJlbmNlcw0K</div>
 
 
 </div>
@@ -1457,6 +1463,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

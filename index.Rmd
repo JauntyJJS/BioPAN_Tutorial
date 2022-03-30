@@ -88,6 +88,7 @@ More information can be found in this [paper](https://doi.org/10.1016/j.copbio.2
 # Packages
 
 ```{r warning=FALSE, message=FALSE, results='asis'}
+library(styler)
 library(dplyr)
 library(magrittr)
 library(report)
@@ -114,7 +115,7 @@ summary(report::report(sessionInfo()))
 
 # Rmarkdown Template
 
-This Rmarkdown template is created by the [Reality Bending Lab](https://realitybending.github.io/). The template can be download from the lab's [github](https://github.com/RealityBending/TemplateResults) repository. For more information about the motivation behind creating this template, check out [Dr. Dominique Makowski's blog post](https://dominiquemakowski.github.io/post/template_results/)
+This Rmarkdown template is created by the [Reality Bending Lab](https://realitybending.github.io/). The template can be download from the lab's [github](https://github.com/RealityBending/TemplateResults) repository. For more information about the motivation behind creating this template, check out [Dr. Dominique Makowski's blog post](https://dominiquemakowski.github.io/post/2021-02-10-template_results/)
 
 # Package References
 ```{r warning=FALSE, message=TRUE, results='asis'}
